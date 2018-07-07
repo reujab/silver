@@ -1,13 +1,14 @@
 extern crate clap;
 
 use clap::App;
+use clap::AppSettings;
 use std::env;
 
 fn main() {
     let shell = env::var("BRONZE_SHELL").expect("$BRONZE_SHELL is not set");
 
     let matches = App::new("bronze")
-        .setting(clap::AppSettings::SubcommandRequiredElseHelp)
+        .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(clap::SubCommand::with_name("init"))
         .get_matches();
 
