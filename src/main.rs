@@ -7,7 +7,7 @@ fn main() {
     let shell = env::var("BRONZE_SHELL").expect("$BRONZE_SHELL is not set");
 
     let matches = App::new("bronze")
-        .setting(clap::AppSettings::SubcommandRequired)
+        .setting(clap::AppSettings::SubcommandRequiredElseHelp)
         .subcommand(clap::SubCommand::with_name("init"))
         .get_matches();
 
