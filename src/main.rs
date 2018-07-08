@@ -7,9 +7,9 @@ use clap::AppSettings;
 use std::env;
 
 fn main() {
-    let shell = env::var("BRONZE_SHELL").expect("$BRONZE_SHELL is not set");
+    let shell = env::var("SILVER_SHELL").expect("$SILVER_SHELL is not set");
 
-    let matches = App::new("bronze")
+    let matches = App::new("silver")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(clap::SubCommand::with_name("init"))
         .subcommand(
@@ -26,7 +26,7 @@ fn main() {
             "bash" => print!("{}", include_str!("init.bash")),
             "zsh" => print!("{}", include_str!("init.zsh")),
             "fish" => print!("{}", include_str!("init.fish")),
-            _ => panic!("unknown $BRONZE_SHELL"),
+            _ => panic!("unknown $SILVER_SHELL"),
         },
         "print" => print::prompt(
             shell,
