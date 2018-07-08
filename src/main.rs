@@ -22,6 +22,7 @@ fn main() {
     let matches = App::new("silver")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .about("a cross-shell customizable powerline-like prompt with icons")
+        .after_help("https://github.com/reujab/silver/wiki")
         .subcommand(
             clap::SubCommand::with_name("init").about("Initializes the shell for use of silver"),
         )
