@@ -21,13 +21,18 @@ fn main() {
 
     let matches = App::new("silver")
         .setting(AppSettings::SubcommandRequiredElseHelp)
-        .subcommand(clap::SubCommand::with_name("init"))
+        .about("a cross-shell customizable powerline-like prompt with icons")
         .subcommand(
-            clap::SubCommand::with_name("print").arg(
-                clap::Arg::with_name("segments")
-                    .required(true)
-                    .min_values(1),
-            ),
+            clap::SubCommand::with_name("init").about("Initializes the shell for use of silver"),
+        )
+        .subcommand(
+            clap::SubCommand::with_name("print")
+                .arg(
+                    clap::Arg::with_name("segments")
+                        .required(true)
+                        .min_values(1),
+                )
+                .about("Prints the prompt with the specified modules"),
         )
         .get_matches();
 
