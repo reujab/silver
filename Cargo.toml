@@ -5,4 +5,5 @@ authors = ["reujab <reujab@gmail.com>"]
 
 [dependencies]
 clap = {version = "2.32.0", features = ["yaml"]}
+lazy_static = "1.0.1"
 regex = "1.0.1"
