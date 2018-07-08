@@ -20,17 +20,26 @@ fn code(color: &str, prefix: &str) -> Option<String> {
     }
 }
 
-fn bash_color(color: &str, prefix: &str) -> String {
+fn escape(color: &str, prefix: &str, before_color: &str, after_color: &str) -> String {
     match code(&color, &prefix) {
         // 16 colors
-        Some(code) => format!("\\[\x1b[{}m\\]", code),
+        Some(code) => format!("{}\x1b[{}m{}", before_color, code, after_color),
         None => match u8::from_str_radix(&color, 10) {
             // 256 colors
-            Ok(_) => format!("\\[\x1b[{}8;5;{}m\\]", prefix, color),
+            Ok(_) => format!(
+                "{}\x1b[{}8;5;{}m{}",
+                before_color, prefix, color, after_color,
+            ),
             Err(_) => {
                 // 24-bit color
                 if HEX.is_match(&color) {
-                    format!("\\[\x1b[{}8;2;{}m\\]", prefix, escape_hex(color))
+                    format!(
+                        "{}\x1b[{}8;2;{}m{}",
+                        before_color,
+                        prefix,
+                        escape_hex(color),
+                        after_color
+                    )
                 } else {
                     panic!("invalid background color: {}", color)
                 }
@@ -48,8 +57,8 @@ pub fn escape_background(shell: &str, color: &str) -> String {
                 format!("%K{{{}}}", color)
             }
         }
-        "bash" => bash_color(color, "4"),
-        _ => panic!(),
+        "bash" => escape(color, "4", "\\[", "\\]"),
+        _ => escape(color, "4", "", ""),
     }
 }
 
@@ -62,8 +71,8 @@ pub fn escape_foreground(shell: &str, color: &str) -> String {
                 format!("%F{{{}}}", color)
             }
         }
-        "bash" => bash_color(color, "3"),
-        _ => panic!(),
+        "bash" => escape(color, "3", "\\[", "\\]"),
+        _ => escape(color, "3", "", ""),
     }
 }
 
