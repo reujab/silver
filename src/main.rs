@@ -1,10 +1,20 @@
 extern crate clap;
+extern crate regex;
 
+mod icons;
+mod modules;
 mod print;
+mod sh;
 
 use clap::App;
 use clap::AppSettings;
 use std::env;
+
+pub struct Segment {
+    background: String,
+    foreground: String,
+    value: String,
+}
 
 fn main() {
     let shell = env::var("SILVER_SHELL").expect("$SILVER_SHELL is not set");
