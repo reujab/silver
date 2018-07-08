@@ -17,7 +17,7 @@ pub struct Segment {
 }
 
 fn main() {
-    let shell = env::var("SILVER_SHELL").expect("$SILVER_SHELL is not set");
+    let shell = env::var("SILVER_SHELL").unwrap_or(String::new());
 
     let matches = App::new("silver")
         .setting(AppSettings::SubcommandRequiredElseHelp)
