@@ -7,6 +7,7 @@ mod status;
 mod time;
 mod user;
 mod env;
+mod virtualenv;
 
 pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
     match module {
@@ -17,6 +18,7 @@ pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
         "cmdtime" => cmdtime::segment(segment, args),
         "time" => time::segment(segment, args),
         "env" => env::segment(segment, args),
+        "virtualenv" => virtualenv::segment(segment, args),
         _ => panic!("unknown module, {}", module),
     }
 }
