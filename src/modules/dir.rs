@@ -55,4 +55,8 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     }
 
     segment.value = wd.to_str().unwrap().to_owned();
+
+    if segment.value != "/" && segment.value.ends_with("/") {
+        segment.value.pop();
+    }
 }
