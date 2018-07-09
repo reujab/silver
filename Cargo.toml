@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["reujab <reujab@gmail.com>"]
 
 [dependencies]
+chrono = "0.4.4"
 clap = {version = "2.32.0", features = ["yaml"]}
 hostname = "0.1.5"
 humantime = "1.1.1"

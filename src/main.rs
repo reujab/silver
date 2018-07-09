@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate lazy_static;
 
+extern crate chrono;
 extern crate clap;
 extern crate hostname;
 extern crate humantime;
