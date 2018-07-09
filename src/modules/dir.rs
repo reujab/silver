@@ -1,9 +1,10 @@
 use icons;
 use std::env;
+use std::path::Path;
 use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
-    let mut wd = env::current_dir().unwrap().to_str().unwrap().to_owned();
+    let mut wd = env::current_dir().unwrap();
 
     // process aliases
     let mut aliases = match env::var("SILVER_DIR_ALIASES") {
@@ -25,12 +26,12 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     }
     for i in 0..aliases.len() / 2 {
         let dir = &aliases[i * 2];
-        if format!("{}/", wd).starts_with(&format!("{}/", dir)) {
-            let icon = &aliases[i * 2 + 1];
-            wd = format!("{}{}", icon, &wd[dir.len()..]);
-            break;
+        let icon = &aliases[i * 2 + 1];
+        wd = match wd.strip_prefix(dir) {
+            Ok(stripped) => Path::new(icon).join(stripped.to_path_buf()),
+            Err(_) => wd.clone(),
         }
     }
 
-    segment.value = wd;
+    segment.value = wd.to_str().unwrap().to_owned();
 }
