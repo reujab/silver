@@ -7,3 +7,4 @@ authors = ["reujab <reujab@gmail.com>"]
 clap = {version = "2.32.0", features = ["yaml"]}
 lazy_static = "1.0.1"
 regex = "1.0.1"
+rust-ini = "0.12.2"

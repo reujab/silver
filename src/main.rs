@@ -2,6 +2,7 @@
 extern crate lazy_static;
 
 extern crate clap;
+extern crate ini;
 extern crate regex;
 
 mod icons;
