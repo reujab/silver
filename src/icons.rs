@@ -18,15 +18,15 @@ pub fn get(id: &str) -> String {
         {
             "nerd" => match id {
                 "apple" => "\u{f179}",      // Font Awesome; apple
-                "arch" => "\u{f300}",       // Font Linux
-                "centOS" => "\u{f301}",     // Font Linux
-                "debian" => "\u{f302}",     // Font Linux
-                "fedora" => "\u{f303}",     // Font Linux
-                "mint" => "\u{f304}",       // Font Linux
-                "SUSE" => "\u{f308}",       // Font Linux
-                "ubuntu" => "\u{f30c}",     // Font Linux
-                "elementary" => "\u{f311}", // Font Linux
-                "linux" => "\u{f17c}",      // Font Awesome; linux
+                "arch" => "\u{f303}",       // Font Linux
+                "centOS" => "\u{f304}",     // Font Linux
+                "debian" => "\u{f306}",     // Font Linux
+                "fedora" => "\u{f30a}",     // Font Linux
+                "mint" => "\u{f30e}",       // Font Linux
+                "SUSE" => "\u{f314}",       // Font Linux
+                "ubuntu" => "\u{f31b}",     // Font Linux
+                "elementary" => "\u{f309}", // Font Linux
+                "linux" => "\u{f31a}",      // Font Linux
                 "bsd" => "\u{f30e}",        // Font Linux
                 "root" => "\u{e00a}",       // Pomicons; lightning
                 "readonly" => "\u{f023}",   // Font Awesome; lock
