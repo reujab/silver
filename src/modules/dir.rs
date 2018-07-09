@@ -1,7 +1,6 @@
 use dirs;
 use icons;
 use std::env;
-use std::ffi::OsStr;
 use std::path::Path;
 use Segment;
 
@@ -43,9 +42,9 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             .map(|component| {
                 i += 1;
                 if i != iter_len && component.len() > len {
-                    OsStr::new(&component.to_str().unwrap()[..len])
+                    component.to_str().unwrap().chars().take(len).collect()
                 } else {
-                    component
+                    component.to_str().unwrap().to_owned()
                 }
             })
             .collect();
