@@ -26,25 +26,66 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
                 true
             }).unwrap();
 
-            let mut ahead = 0;
-            let mut behind = 0;
-            // let branch;
+            let mut graph = String::new();
+            let mut branch = String::new();
             match repo.head() {
                 Ok(head) => {
+                    branch = head.shorthand().unwrap().to_owned();
+
                     let local = head.target().unwrap();
-                    let upstream =
-                        repo.find_branch(head.shorthand().unwrap(), git2::BranchType::Local)
-                            .unwrap();
+                    let upstream = repo.find_branch(&branch, git2::BranchType::Local).unwrap();
                     let upstream = upstream.upstream().unwrap().get().target().unwrap();
-                    let (_ahead, _behind) = repo.graph_ahead_behind(local, upstream).unwrap();
-                    ahead = _ahead;
-                    behind = _behind;
+
+                    let (ahead, behind) = repo.graph_ahead_behind(local, upstream).unwrap();
+                    graph =
+                        icons::get("ahead").repeat(ahead) + &icons::get("behind").repeat(behind);
                 }
                 Err(_) => {}
             }
-            println!("{} - {}", ahead, behind);
 
-            segment.value = [domain, stashes].join(" ");
+            let mut modified = String::new();
+            let mut staged = String::new();
+            match repo.statuses(Some(git2::StatusOptions::new().include_untracked(true))) {
+                Ok(statuses) => for status in statuses.iter() {
+                    // dirty
+                    segment.background = "yellow".to_owned();
+
+                    let status = status.status();
+                    if modified.is_empty() && status.is_wt_new()
+                        || status.is_wt_modified()
+                        || status.is_wt_renamed()
+                        || status.is_wt_typechange()
+                    {
+                        modified = icons::get("modified");
+                    }
+                    if staged.is_empty() && status.is_index_new()
+                        || status.is_index_modified()
+                        || status.is_index_deleted()
+                        || status.is_index_renamed()
+                        || status.is_index_typechange()
+                    {
+                        staged = icons::get("staged");
+                    }
+
+                    if !modified.is_empty() && !staged.is_empty() {
+                        break;
+                    }
+                },
+                // bare repository
+                Err(_) => {}
+            }
+
+            let mut parts = vec![domain];
+            if !stashes.is_empty() || !graph.is_empty() {
+                parts.push(stashes + &graph);
+            }
+            if !branch.is_empty() {
+                parts.push(branch);
+            }
+            if !modified.is_empty() || !staged.is_empty() {
+                parts.push(modified + &staged);
+            }
+            segment.value = parts.join(" ");
         }
         Err(_) => {}
     }
