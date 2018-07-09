@@ -1,6 +1,7 @@
 mod cmdtime;
 mod dir;
 mod env;
+mod git;
 mod os;
 mod status;
 mod time;
@@ -14,6 +15,7 @@ pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
         "os" => os::segment(segment, args),
         "status" => status::segment(segment, args),
         "dir" => dir::segment(segment, args),
+        "git" => git::segment(segment, args),
         "user" => user::segment(segment, args),
         "cmdtime" => cmdtime::segment(segment, args),
         "time" => time::segment(segment, args),

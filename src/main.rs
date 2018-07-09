@@ -3,11 +3,13 @@ extern crate lazy_static;
 
 extern crate chrono;
 extern crate clap;
+extern crate git2;
 extern crate hostname;
 extern crate humantime;
 extern crate ini;
 extern crate libc;
 extern crate regex;
+extern crate url;
 extern crate users;
 
 mod icons;
