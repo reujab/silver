@@ -3,10 +3,10 @@ use modules;
 use sh;
 use Segment;
 
-pub fn prompt(shell: String, args: Vec<String>) {
+pub fn prompt(shell: &str, args: Vec<String>) {
     let mut segments = vec![];
     for arg in args {
-        let fields = arg.split(":").collect::<Vec<&str>>();
+        let fields = arg.split(':').collect::<Vec<&str>>();
         if fields.len() < 3 {
             panic!("invalid argument, {}", arg);
         }

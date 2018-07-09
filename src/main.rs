@@ -3,6 +3,7 @@ extern crate lazy_static;
 
 extern crate chrono;
 extern crate clap;
+extern crate dirs;
 extern crate git2;
 extern crate hostname;
 extern crate humantime;
@@ -28,7 +29,7 @@ pub struct Segment {
 }
 
 fn main() {
-    let shell = env::var("SILVER_SHELL").unwrap_or(String::new());
+    let shell = env::var("SILVER_SHELL").unwrap_or_default();
 
     let matches = App::new("silver")
         .setting(AppSettings::SubcommandRequiredElseHelp)
@@ -56,7 +57,7 @@ fn main() {
             _ => panic!("unknown $SILVER_SHELL"),
         },
         "print" => print::prompt(
-            shell,
+            &shell,
             matches.subcommand_matches("print").unwrap().args["segments"]
                 .vals
                 // convert OsStrs to Strings, which are Sized

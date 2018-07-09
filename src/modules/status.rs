@@ -17,22 +17,19 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     // https://linux.die.net/man/2/access
     #[cfg(unix)]
     unsafe {
-        if libc::access(CString::new(".").unwrap().as_ptr(), libc::W_OK) != libc::F_OK {
+        let wd = CString::new(".").unwrap();
+        if libc::access(wd.as_ptr(), libc::W_OK) != libc::F_OK {
             segment.value += &icons::get("readonly");
         }
     }
 
-    match env::var("code") {
-        Ok(code) => if code != "0" {
-            segment.value += &icons::get("failed")
-        },
-        Err(_) => {}
+    if let Ok(code) = env::var("code") {
+        if code != "0" {
+            segment.value += &icons::get("failed");
+        }
     }
 
-    match env::var("jobs") {
-        Ok(jobs) => {
-            segment.value += &icons::get("job").repeat(usize::from_str_radix(&jobs, 10).unwrap())
-        }
-        Err(_) => {}
+    if let Ok(jobs) = env::var("jobs") {
+        segment.value += &icons::get("job").repeat(usize::from_str_radix(&jobs, 10).unwrap());
     }
 }

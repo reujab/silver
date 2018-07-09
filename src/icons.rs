@@ -1,11 +1,11 @@
 use std::env;
 
 pub fn separator() -> String {
-    env::var("SILVER_SEPARATOR").unwrap_or("\u{e0b0}".to_owned())
+    env::var("SILVER_SEPARATOR").unwrap_or_else(|_| "\u{e0b0}".to_owned())
 }
 
 pub fn thin_separator() -> String {
-    env::var("SILVER_THIN_SEPARATOR").unwrap_or("\u{e0b1}".to_owned())
+    env::var("SILVER_THIN_SEPARATOR").unwrap_or_else(|_| "\u{e0b1}".to_owned())
 }
 
 pub fn get(id: &str) -> String {
@@ -13,7 +13,7 @@ pub fn get(id: &str) -> String {
     match icon {
         Ok(icon) => icon,
         Err(_) => match env::var("SILVER_ICONS")
-            .unwrap_or("nerd".to_owned())
+            .unwrap_or_else(|_| "nerd".to_owned())
             .as_str()
         {
             "nerd" => match id {
