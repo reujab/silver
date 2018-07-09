@@ -3,7 +3,9 @@ extern crate lazy_static;
 
 extern crate clap;
 extern crate ini;
+extern crate libc;
 extern crate regex;
+extern crate users;
 
 mod icons;
 mod modules;
