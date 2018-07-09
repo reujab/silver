@@ -1,5 +1,6 @@
 use icons;
 use std::env;
+use std::ffi::OsStr;
 use std::path::Path;
 use Segment;
 
@@ -31,6 +32,26 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             Ok(stripped) => Path::new(icon).join(stripped.to_path_buf()),
             Err(_) => wd.clone(),
         }
+    }
+
+    // process length
+    match env::var("SILVER_DIR_LENGTH") {
+        Ok(len) => {
+            let len = usize::from_str_radix(&len, 10).expect("invalid $SILVER_DIR_LENGTH");
+            let iter_len = wd.iter().count();
+            let mut i = 0;
+            wd = wd.iter()
+                .map(|component| {
+                    i += 1;
+                    if i != iter_len && component.len() > len {
+                        OsStr::new(&component.to_str().unwrap()[..len])
+                    } else {
+                        component
+                    }
+                })
+                .collect();
+        }
+        Err(_) => {}
     }
 
     segment.value = wd.to_str().unwrap().to_owned();
