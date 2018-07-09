@@ -1,5 +1,6 @@
 use Segment;
 
+mod cmdtime;
 mod dir;
 mod os;
 mod status;
@@ -11,6 +12,7 @@ pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
         "status" => status::segment(segment, args),
         "dir" => dir::segment(segment, args),
         "user" => user::segment(segment, args),
+        "cmdtime" => cmdtime::segment(segment, args),
         _ => panic!("unknown module, {}", module),
     }
 }

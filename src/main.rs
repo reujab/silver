@@ -3,6 +3,7 @@ extern crate lazy_static;
 
 extern crate clap;
 extern crate hostname;
+extern crate humantime;
 extern crate ini;
 extern crate libc;
 extern crate regex;

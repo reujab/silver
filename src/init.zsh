@@ -6,5 +6,5 @@ preexec() {
 }
 
 precmd() {
-	PROMPT="$(code=$? jobs=$(jobs | wc -l) cmdtime=$(($(date +%s%3N)-$SILVER_START))ms silver print "${SILVER[@]}") "
+	PROMPT="$(code=$? jobs=$(jobs | wc -l) cmdtime=$(($(date +%s%3N)-$SILVER_START)) silver print "${SILVER[@]}") "
 }
