@@ -30,6 +30,8 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     }
 
     if let Ok(jobs) = env::var("jobs") {
-        segment.value += &icons::get("job").repeat(usize::from_str_radix(&jobs, 10).unwrap());
+        if let Ok(jobs_count) = usize::from_str_radix(jobs.trim(), 10) {
+            segment.value += &icons::get("job").repeat(jobs_count);
+        }
     }
 }
