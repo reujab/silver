@@ -62,7 +62,7 @@ fn main() {
                 .vals
                 // converts OsStrs to Strings, which are Sized
                 .iter()
-                .map(|s| s.to_str().unwrap().to_string())
+                .map(|s| s.to_str().unwrap().to_owned())
                 .collect::<Vec<String>>(),
         ),
         _ => panic!(),
