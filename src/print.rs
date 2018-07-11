@@ -60,7 +60,7 @@ pub fn prompt(shell: &str, args: Vec<String>) {
         last_segment = segment;
     }
 
-    // print final separator
+    // prints final separator
     print_segment(
         &shell,
         "none",

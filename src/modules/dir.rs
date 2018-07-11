@@ -7,7 +7,7 @@ use Segment;
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let mut wd = env::current_dir().unwrap();
 
-    // process aliases
+    // processes aliases
     let mut aliases = match env::var("SILVER_DIR_ALIASES") {
         Ok(var) => var
             .split(':')
@@ -32,7 +32,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         }
     }
 
-    // process length
+    // processes length
     if let Ok(len) = env::var("SILVER_DIR_LENGTH") {
         let len = usize::from_str_radix(&len, 10).expect("invalid $SILVER_DIR_LENGTH");
         let iter_len = wd.iter().count();

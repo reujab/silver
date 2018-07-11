@@ -60,7 +60,7 @@ fn main() {
             &shell,
             matches.subcommand_matches("print").unwrap().args["segments"]
                 .vals
-                // convert OsStrs to Strings, which are Sized
+                // converts OsStrs to Strings, which are Sized
                 .iter()
                 .map(|s| s.to_str().unwrap().to_string())
                 .collect::<Vec<String>>(),
