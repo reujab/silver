@@ -5,19 +5,17 @@ use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     if let Ok(mut repo) = git2::Repository::discover(".") {
-        let domain = match repo.find_remote("origin") {
-            Ok(origin) => match Url::parse(origin.url().unwrap_or(""))
-                .unwrap_or_else(|_| Url::parse("https://example.com").unwrap())
-                .domain()
-                .unwrap_or("")
-            {
-                "github.com" => icons::get("github"),
-                "gitlab.com" => icons::get("gitlab"),
-                "bitbucket.com" => icons::get("bitbucket"),
-                _ => icons::get("git"),
-            },
-            Err(_) => icons::get("git"),
-        }.to_owned();
+        let mut domain = icons::get("git");
+        if let Ok(origin) = repo.find_remote("origin") {
+            if let Ok(url) = Url::parse(origin.url().unwrap_or_default()) {
+                match url.domain().unwrap_or_default() {
+                    "github.com" => domain = icons::get("github"),
+                    "gitlab.com" => domain = icons::get("gitlab"),
+                    "bitbucket.com" => domain = icons::get("bitbucket"),
+                    _ => {}
+                }
+            }
+        }
 
         let mut stashes = String::new();
         repo.stash_foreach(|_, _, _| {
@@ -36,7 +34,8 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             if let Ok(upstream) = upstream {
                 if let Some(upstream) = upstream.get().target() {
                     let (ahead, behind) = repo.graph_ahead_behind(local, upstream).unwrap();
-                    graph = icons::get("ahead").repeat(ahead) + &icons::get("behind").repeat(behind);
+                    graph =
+                        icons::get("ahead").repeat(ahead) + &icons::get("behind").repeat(behind);
                 }
             }
         }
