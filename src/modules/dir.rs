@@ -34,7 +34,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
 
     // processes length
     if let Ok(len) = env::var("SILVER_DIR_LENGTH") {
-        let len = usize::from_str_radix(&len, 10).expect("invalid $SILVER_DIR_LENGTH");
+        let len = len.parse::<usize>().expect("invalid $SILVER_DIR_LENGTH");
         let iter_len = wd.iter().count();
         let mut i = 0;
         wd = wd

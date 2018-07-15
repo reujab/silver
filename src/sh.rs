@@ -24,7 +24,7 @@ fn escape(color: &str, prefix: &str, before_color: &str, after_color: &str) -> S
     match code(&color, &prefix) {
         // 16 colors
         Some(code) => format!("{}\x1b[{}m{}", before_color, code, after_color),
-        None => match u8::from_str_radix(&color, 10) {
+        None => match color.parse::<u8>() {
             // 256 colors
             Ok(_) => format!(
                 "{}\x1b[{}8;5;{}m{}",

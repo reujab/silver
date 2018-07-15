@@ -4,7 +4,7 @@ use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let now = chrono::offset::Local::now();
-    let (am, hour) = now.hour12();
+    let (pm, hour) = now.hour12();
     let minute = now.minute();
-    segment.value = format!("{}:{:02}{}", hour, minute, if am { "AM" } else { "PM" })
+    segment.value = format!("{}:{:02}{}", hour, minute, if pm { "PM" } else { "AM" });
 }

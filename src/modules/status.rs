@@ -30,7 +30,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     }
 
     if let Ok(jobs) = env::var("jobs") {
-        if let Ok(jobs_count) = usize::from_str_radix(jobs.trim(), 10) {
+        if let Ok(jobs_count) = jobs.trim().parse() {
             segment.value += &icons::get("job").repeat(jobs_count);
         }
     }
