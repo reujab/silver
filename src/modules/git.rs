@@ -26,16 +26,16 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         let mut graph = String::new();
         let mut branch = String::new();
         if let Ok(head) = repo.head() {
-            branch = head.shorthand().unwrap().to_owned();
-
+            branch = head.shorthand().unwrap_or_default().to_owned();
             let local = head.target().unwrap();
-            let local_branch = repo.find_branch(&branch, git2::BranchType::Local).unwrap();
-            let upstream = local_branch.upstream();
-            if let Ok(upstream) = upstream {
-                if let Some(upstream) = upstream.get().target() {
-                    let (ahead, behind) = repo.graph_ahead_behind(local, upstream).unwrap();
-                    graph =
-                        icons::get("ahead").repeat(ahead) + &icons::get("behind").repeat(behind);
+            if let Ok(local_branch) = repo.find_branch(&branch, git2::BranchType::Local) {
+                let upstream = local_branch.upstream();
+                if let Ok(upstream) = upstream {
+                    if let Some(upstream) = upstream.get().target() {
+                        let (ahead, behind) = repo.graph_ahead_behind(local, upstream).unwrap();
+                        graph = icons::get("ahead").repeat(ahead)
+                            + &icons::get("behind").repeat(behind);
+                    }
                 }
             }
         }
