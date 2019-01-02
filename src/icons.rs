@@ -83,3 +83,13 @@ pub fn get(id: &str) -> String {
         },
     }
 }
+
+pub fn repeat(icon: &str, n: usize) -> String {
+    let icon = get(icon);
+
+    if n > 5 {
+        format!("{}{}", icon, n)
+    } else {
+        icon.repeat(n)
+    }
+}

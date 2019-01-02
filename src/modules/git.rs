@@ -17,11 +17,13 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             }
         }
 
-        let mut stashes = String::new();
+        let mut stashes = 0;
         repo.stash_foreach(|_, _, _| {
-            stashes += &icons::get("stash");
+            stashes += 1;
             true
-        }).unwrap();
+        })
+        .unwrap();
+        let stashes = icons::repeat("stash", stashes);
 
         let mut graph = String::new();
         let mut branch = String::new();
@@ -33,8 +35,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
                 if let Ok(upstream) = upstream {
                     if let Some(upstream) = upstream.get().target() {
                         let (ahead, behind) = repo.graph_ahead_behind(local, upstream).unwrap();
-                        graph = icons::get("ahead").repeat(ahead)
-                            + &icons::get("behind").repeat(behind);
+                        graph = icons::repeat("ahead", ahead) + &icons::repeat("behind", behind);
                     }
                 }
             }
