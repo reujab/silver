@@ -53,6 +53,8 @@ pub fn escape_background(shell: &str, color: &str) -> String {
         "zsh" => {
             if HEX.is_match(&color) {
                 format!("%{{\x1b[48;2;{}m%}}", escape_hex(color))
+            } else if color == "none" {
+                format!("%k")
             } else {
                 format!("%K{{{}}}", color)
             }
