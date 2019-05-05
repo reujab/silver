@@ -12,20 +12,28 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         Ok(var) => var
             .split(':')
             .map(|alias| alias.to_owned())
-            .collect::<Vec<String>>(),
-        Err(_) => vec![],
+            .collect::<Vec<String>>()
+            .chunks_exact(2)
+            .map(|alias| alias.to_owned())
+            .collect::<Vec<Vec<String>>>(),
+        Err(_) => vec![vec![]],
     };
-    if aliases.len() % 2 != 0 {
-        panic!("invalid $SILVER_DIR_ALIASES");
-    }
+    // sorts from deepest alias to shallowest
+    aliases.sort_by(|a, b| {
+        Path::new(&a[0])
+            .iter()
+            .count()
+            .partial_cmp(&Path::new(&b[0]).iter().count())
+            .unwrap()
+            .reverse()
+    });
     // default home alias
     if let Some(home) = dirs::home_dir() {
-        aliases.push(home.to_str().unwrap().to_owned());
-        aliases.push(icons::get("home"));
+        aliases.push(vec![home.to_str().unwrap().to_owned(), icons::get("home")])
     }
-    for i in 0..aliases.len() / 2 {
-        let dir = &aliases[i * 2];
-        let icon = &aliases[i * 2 + 1];
+    for alias in aliases {
+        let dir = &alias[0];
+        let icon = &alias[1];
         wd = match wd.strip_prefix(dir) {
             Ok(stripped) => Path::new(icon).join(stripped.to_path_buf()),
             Err(_) => wd.clone(),
