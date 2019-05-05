@@ -45,7 +45,8 @@ pub fn get(id: &str) -> String {
                 "modified" => "\u{f111}",   // Unicode
                 "staged" => "\u{f067}",     // Unicode
                 _ => "",
-            }.to_owned(),
+            }
+            .to_owned(),
             "unicode" => match id {
                 // TODO: test if it's possible to use \uf8ff on an Apple machine
                 "apple" => "\u{1f34e}",    // Emoji; red apple
@@ -64,7 +65,8 @@ pub fn get(id: &str) -> String {
                 "modified" => "\u{25cf}", // Unicode
                 "staged" => "\u{271a}",   // Unicode
                 _ => "",
-            }.to_owned(),
+            }
+            .to_owned(),
             "ascii" => match id {
                 "root" => "#",
                 "readonly" => "@",
@@ -78,7 +80,8 @@ pub fn get(id: &str) -> String {
                 "modified" => "*",
                 "staged" => "+",
                 _ => "",
-            }.to_owned(),
+            }
+            .to_owned(),
             _ => panic!("unknown $SILVER_ICONS"),
         },
     }

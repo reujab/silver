@@ -9,13 +9,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     segment.value = icons::get("apple");
 }
 
-#[cfg(
-    any(
-        target_os = "openbsd",
-        target_os = "freebsd",
-        target_os = "netbsd",
-    ),
-)]
+#[cfg(any(target_os = "openbsd", target_os = "freebsd", target_os = "netbsd"))]
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     segment.value = icons::get("bsd");
 }
