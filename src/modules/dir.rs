@@ -16,7 +16,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             .chunks_exact(2)
             .map(|alias| alias.to_owned())
             .collect::<Vec<Vec<String>>>(),
-        Err(_) => vec![vec![]],
+        Err(_) => vec![],
     };
     // default home alias
     if let Some(home) = dirs::home_dir() {
