@@ -18,6 +18,10 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             .collect::<Vec<Vec<String>>>(),
         Err(_) => vec![vec![]],
     };
+    // default home alias
+    if let Some(home) = dirs::home_dir() {
+        aliases.push(vec![home.to_str().unwrap().to_owned(), icons::get("home")])
+    }
     // sorts from deepest alias to shallowest
     aliases.sort_by(|a, b| {
         Path::new(&a[0])
@@ -27,10 +31,6 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             .unwrap()
             .reverse()
     });
-    // default home alias
-    if let Some(home) = dirs::home_dir() {
-        aliases.push(vec![home.to_str().unwrap().to_owned(), icons::get("home")])
-    }
     for alias in aliases {
         let dir = &alias[0];
         let icon = &alias[1];
