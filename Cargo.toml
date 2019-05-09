@@ -1,6 +1,6 @@
 [package]
 name = "silver"
-version = "1.0.6"
+version = "1.0.7"
 authors = ["reujab <reujab@gmail.com>"]
 
 description = "A cross-shell customizable powerline-like prompt with icons"
