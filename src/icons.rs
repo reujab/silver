@@ -28,6 +28,7 @@ pub fn get(id: &str) -> String {
                 "elementary" => "\u{f309}", // Font Linux
                 "linux" => "\u{f31a}",      // Font Linux
                 "bsd" => "\u{f30e}",        // Font Linux
+                "windows" => "\u{f17a}",    // Font Awesome; windows
                 "root" => "\u{e00a}",       // Pomicons; lightning
                 "readonly" => "\u{f023}",   // Font Awesome; lock
                 "failed" => "\u{e009}",     // Pomicons; exclamation
@@ -38,6 +39,7 @@ pub fn get(id: &str) -> String {
                 "github" => "\u{f09b}",     // Font Awesome; github
                 "gitlab" => "\u{f296}",     // Font Awesome; gitlab
                 "bitbucket" => "\u{f171}",  // Font Awesome; bitbucket
+                "azure" => "\u{fd03}",      // Font Awesome; azure
                 "git" => "\u{e0a0}",        // Powerline
                 "stash" => "\u{f01c}",      // Font Awesome; inbox
                 "ahead" => "\u{f148}",      // Font Awesome; level-up
@@ -52,6 +54,7 @@ pub fn get(id: &str) -> String {
                 "apple" => "\u{1f34e}",    // Emoji; red apple
                 "linux" => "\u{1f427}",    // Emoji; penguin
                 "bsd" => "\u{1f608}",      // Emoji; smiling face with horns
+                "windows" => "\u{1f5a5}",  // Emoji; desktop computer
                 "root" => "\u{26a1}",      // Emoji; high voltage
                 "readonly" => "\u{1f512}", // Emoji; locked
                 "failed" => "\u{2757}",    // Emoji; exclamation mark

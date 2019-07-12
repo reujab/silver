@@ -12,6 +12,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
                     "github.com" => domain = icons::get("github"),
                     "gitlab.com" => domain = icons::get("gitlab"),
                     "bitbucket.com" => domain = icons::get("bitbucket"),
+                    "dev.azure.com" => domain = icons::get("azure"),
                     _ => {}
                 }
             }

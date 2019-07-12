@@ -11,7 +11,10 @@ extern crate ini;
 extern crate libc;
 extern crate regex;
 extern crate url;
+#[cfg(not(target_os = "windows"))]
 extern crate users;
+#[cfg(target_os = "windows")]
+extern crate winapi;
 
 mod icons;
 mod modules;
