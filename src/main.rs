@@ -57,6 +57,7 @@ fn main() {
             "bash" => print!("{}", include_str!("init.bash")),
             "zsh" => print!("{}", include_str!("init.zsh")),
             "fish" => print!("{}", include_str!("init.fish")),
+            "powershell" => print!("{}", include_str!("init.powershell")),
             _ => panic!("unknown $SILVER_SHELL"),
         },
         "print" => print::prompt(
