@@ -27,7 +27,7 @@ pub fn get(id: &str) -> String {
                 "ubuntu" => "\u{f31b}",     // Font Linux
                 "elementary" => "\u{f309}", // Font Linux
                 "linux" => "\u{f31a}",      // Font Linux
-                "bsd" => "\u{f30e}",        // Font Linux
+                "bsd" => "\u{f30c}",        // Font Linux
                 "root" => "\u{e00a}",       // Pomicons; lightning
                 "readonly" => "\u{f023}",   // Font Awesome; lock
                 "failed" => "\u{e009}",     // Pomicons; exclamation
