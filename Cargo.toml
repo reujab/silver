@@ -22,4 +22,14 @@ libc = "0.2.42"
 regex = "1.0.1"
 rust-ini = "0.13.0"
 url = "1.7.1"
+
+[target.'!cfg(windows)'.dependencies]
 users = "0.9.0"
+
+[target.'cfg(windows)'.dependencies.winapi]
+version = "0.3.6"
+features = [
+    "handleapi",
+    "processthreadsapi",
+    "securitybaseapi"
+]

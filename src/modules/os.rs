@@ -29,3 +29,8 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         _ => icons::get("linux"),
     }
 }
+
+#[cfg(target_os = "windows")]
+pub fn segment(segment: &mut Segment, _: &[&str]) {
+    segment.value = icons::get("windows");
+}

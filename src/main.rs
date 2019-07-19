@@ -11,7 +11,10 @@ extern crate ini;
 extern crate libc;
 extern crate regex;
 extern crate url;
+#[cfg(not(target_os = "windows"))]
 extern crate users;
+#[cfg(target_os = "windows")]
+extern crate winapi;
 
 mod icons;
 mod modules;
@@ -54,6 +57,7 @@ fn main() {
             "bash" => print!("{}", include_str!("init.bash")),
             "zsh" => print!("{}", include_str!("init.zsh")),
             "fish" => print!("{}", include_str!("init.fish")),
+            "powershell" => print!("{}", include_str!("init.powershell")),
             _ => panic!("unknown $SILVER_SHELL"),
         },
         "print" => print::prompt(

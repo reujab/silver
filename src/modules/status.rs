@@ -5,11 +5,56 @@ use std::ffi::CString;
 
 use icons;
 use std::env;
-use users;
 use Segment;
 
+#[cfg(target_os = "windows")]
+fn is_root() -> bool {
+    use std::mem;
+    use winapi::{
+        ctypes::c_void,
+        shared::minwindef::{DWORD, TRUE},
+        um::{
+            handleapi::{CloseHandle, INVALID_HANDLE_VALUE},
+            processthreadsapi::{GetCurrentProcess, OpenProcessToken},
+            securitybaseapi::GetTokenInformation,
+            winnt::{TokenElevation, TOKEN_ELEVATION, TOKEN_QUERY},
+        },
+    };
+
+    let mut token = INVALID_HANDLE_VALUE;
+    let mut elevated = false;
+    unsafe {
+        if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) == TRUE {
+            let mut elevation: TOKEN_ELEVATION = mem::zeroed();
+            let mut size = mem::size_of::<TOKEN_ELEVATION>() as DWORD;
+            if GetTokenInformation(
+                token,
+                TokenElevation,
+                &mut elevation as *mut TOKEN_ELEVATION as *mut c_void,
+                size,
+                &mut size,
+            ) == TRUE
+            {
+                elevated = elevation.TokenIsElevated != 0;
+            }
+        }
+
+        if token != INVALID_HANDLE_VALUE {
+            CloseHandle(token);
+        }
+    }
+
+    elevated
+}
+
+#[cfg(not(target_os = "windows"))]
+fn is_root() -> bool {
+    use users;
+    users::get_current_uid() == 0
+}
+
 pub fn segment(segment: &mut Segment, _: &[&str]) {
-    if users::get_current_uid() == 0 {
+    if is_root() {
         segment.value += &icons::get("root");
     }
 
