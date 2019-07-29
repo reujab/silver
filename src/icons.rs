@@ -40,7 +40,7 @@ pub fn get(id: &str) -> String {
                 "gitlab" => "\u{f296}",     // Font Awesome; gitlab
                 "bitbucket" => "\u{f171}",  // Font Awesome; bitbucket
                 "azure" => "\u{fd03}",      // Font Awesome; azure
-                "git" => "\u{e0a0}",        // Powerline
+                "git" => "\u{f418}",        // Octicons; branch
                 "stash" => "\u{f01c}",      // Font Awesome; inbox
                 "ahead" => "\u{f148}",      // Font Awesome; level-up
                 "behind" => "\u{f149}",     // Font Awesome; level-down
