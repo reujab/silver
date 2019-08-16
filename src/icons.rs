@@ -9,7 +9,7 @@ pub fn thin_separator() -> String {
 }
 
 pub fn get(id: &str) -> String {
-    let icon = env::var(format!("SILVER_ICON_{}", id.to_lowercase()));
+    let icon = env::var(format!("SILVER_ICON_{}", id.to_uppercase()));
     match icon {
         Ok(icon) => icon,
         Err(_) => match env::var("SILVER_ICONS")
