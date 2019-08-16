@@ -49,7 +49,6 @@ fn is_root() -> bool {
 
 #[cfg(not(target_os = "windows"))]
 fn is_root() -> bool {
-    use users;
     users::get_current_uid() == 0
 }
 
