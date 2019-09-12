@@ -1,4 +1,5 @@
 mod cmdtime;
+mod conda;
 mod dir;
 mod env;
 mod git;
@@ -7,7 +8,6 @@ mod status;
 mod time;
 mod user;
 mod virtualenv;
-mod conda;
 
 use Segment;
 
