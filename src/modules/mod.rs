@@ -7,6 +7,7 @@ mod status;
 mod time;
 mod user;
 mod virtualenv;
+mod conda;
 
 use Segment;
 
@@ -20,6 +21,7 @@ pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
         "cmdtime" => cmdtime::segment(segment, args),
         "time" => time::segment(segment, args),
         "virtualenv" => virtualenv::segment(segment, args),
+        "conda" => conda::segment(segment, args),
 
         "env" => env::segment(segment, args),
         _ => panic!("unknown module, {}", module),
