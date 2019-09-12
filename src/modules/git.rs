@@ -3,7 +3,7 @@ use icons;
 use url::Url;
 use Segment;
 
-pub fn segment(segment: &mut Segment, _: &[&str]) {
+pub fn segment(segment: &mut Segment, args: &[&str]) {
     if let Ok(mut repo) = git2::Repository::discover(".") {
         let mut domain = icons::get("git");
         if let Ok(origin) = repo.find_remote("origin") {
@@ -49,7 +49,11 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         {
             for status in statuses.iter() {
                 // dirty
-                segment.background = "yellow".to_owned();
+                segment.background = if args.is_empty() {
+                    "yellow".to_owned()
+                } else {
+                    args[0].to_owned()
+                };
 
                 let status = status.status();
                 if modified.is_empty() && status.is_wt_new()
