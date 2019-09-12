@@ -24,6 +24,7 @@ mod sh;
 use clap::App;
 use clap::AppSettings;
 use std::env;
+use std::path::Path;
 
 pub struct Segment {
     background: String,
@@ -53,12 +54,15 @@ fn main() {
         .get_matches();
 
     match matches.subcommand_name().unwrap() {
-        "init" => match shell.as_str() {
-            x if x.ends_with("bash") => print!("{}", include_str!("init.bash")),
-            x if x.ends_with("zsh") => print!("{}", include_str!("init.zsh")),
-            x if x.ends_with("fish") => print!("{}", include_str!("init.fish")),
-            x if x.ends_with("powershell") => print!("{}", include_str!("init.powershell")),
-            _ => panic!("unknown $SILVER_SHELL: \"{}\". Supported shells: bash, zsh, fish, powershell", shell),
+        "init" => match Path::new(&shell).file_stem().unwrap().to_str().unwrap() {
+            "bash" => print!("{}", include_str!("init.bash")),
+            "zsh" => print!("{}", include_str!("init.zsh")),
+            "fish" => print!("{}", include_str!("init.fish")),
+            "powershell" => print!("{}", include_str!("init.powershell")),
+            _ => panic!(
+                "unknown $SILVER_SHELL: \"{}\". Supported shells: bash, zsh, fish, powershell",
+                shell
+            ),
         },
         "print" => print::prompt(
             &shell,
