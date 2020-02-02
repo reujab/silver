@@ -14,7 +14,7 @@ license = "Unlicense"
 chrono = "0.4"
 clap = {version = "2", features = ["yaml"]}
 dirs = "2"
-git2 = "0.9"
+git2 = "0.11"
 hostname = "0.1"
 humantime = "1"
 lazy_static = "1"
