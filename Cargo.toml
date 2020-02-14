@@ -20,7 +20,7 @@ hostname = "0.3"
 lazy_static = "1"
 libc = "0.2"
 regex = "1"
-rust-ini = "0.13"
+rust-ini = "0.15"
 url = "2"
 
 [target.'cfg(not(windows))'.dependencies]

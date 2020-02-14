@@ -17,7 +17,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
 #[cfg(target_os = "linux")]
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let release = Ini::load_from_file("/etc/os-release").unwrap();
-    segment.value = match release.general_section()["ID"].as_str() {
+    segment.value = match release.general_section()["ID"].as_ref() {
         "arch" => icons::get("arch"),
         "centos" => icons::get("centOS"),
         "debian" => icons::get("debian"),
