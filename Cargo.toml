@@ -12,15 +12,15 @@ license = "Unlicense"
 
 [dependencies]
 chrono = "0.4"
-clap = {version = "2", features = ["yaml"]}
+clap = "2"
 dirs = "2"
-git2 = "0.9"
-hostname = "0.1"
-humantime = "1"
+git2 = "0.11"
+hostname = "0.3"
+humantime = "2"
 lazy_static = "1"
 libc = "0.2"
 regex = "1"
-rust-ini = "0.13"
+rust-ini = "0.15"
 url = "2"
 
 [target.'cfg(not(windows))'.dependencies]

@@ -20,6 +20,6 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
             .unwrap()
             .into_string()
             .unwrap(),
-        hostname::get_hostname().unwrap()
+        hostname::get().unwrap().to_string_lossy()
     )
 }
