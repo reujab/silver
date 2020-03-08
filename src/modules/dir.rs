@@ -5,7 +5,12 @@ use std::path::Path;
 use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
-    let mut wd = env::current_dir().unwrap();
+    let mut wd = match env::current_dir() {
+        Ok(wd) => wd,
+        Err(_) => {
+            return
+        }
+    };
 
     // processes aliases
     let mut aliases = match env::var("SILVER_DIR_ALIASES") {
