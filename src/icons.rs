@@ -46,6 +46,7 @@ pub fn get(id: &str) -> String {
                 "behind" => "\u{f149}",     // Font Awesome; level-down
                 "modified" => "\u{f111}",   // Unicode
                 "staged" => "\u{f067}",     // Unicode
+                "toolbox" => "\u{f0ad}",    // Font Awesome; wrench
                 _ => "",
             }
             .to_owned(),
@@ -67,6 +68,7 @@ pub fn get(id: &str) -> String {
                 "behind" => "\u{2193}",   // Unicode
                 "modified" => "\u{25cf}", // Unicode
                 "staged" => "\u{271a}",   // Unicode
+                "toolbox" => "\u{1f527}", // Unicode
                 _ => "",
             }
             .to_owned(),
@@ -82,6 +84,7 @@ pub fn get(id: &str) -> String {
                 "behind" => "<",
                 "modified" => "*",
                 "staged" => "+",
+                "toolbox" => "*",
                 _ => "",
             }
             .to_owned(),
