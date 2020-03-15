@@ -35,7 +35,10 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
                 let upstream = local_branch.upstream();
                 if let Ok(upstream) = upstream {
                     if let Some(upstream) = upstream.get().target() {
-                        let (ahead, behind) = repo.graph_ahead_behind(local, upstream).unwrap();
+                        let (ahead, behind) = match repo.graph_ahead_behind(local, upstream) {
+                            Ok((ahead, behind)) => (ahead, behind),
+                            Err(_) => (0, 0),
+                        };
                         graph = icons::repeat("ahead", ahead) + &icons::repeat("behind", behind);
                     }
                 }
