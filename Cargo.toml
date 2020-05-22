@@ -24,7 +24,7 @@ rust-ini = "0.15"
 url = "2"
 
 [target.'cfg(not(windows))'.dependencies]
-users = "0.9"
+users = "0.10"
 
 [target.'cfg(windows)'.dependencies.winapi]
 version = "0.3"
