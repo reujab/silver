@@ -11,7 +11,7 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
                 match url.domain().unwrap_or_default() {
                     "github.com" => domain = icons::get("github"),
                     "gitlab.com" => domain = icons::get("gitlab"),
-                    "bitbucket.com" => domain = icons::get("bitbucket"),
+                    "bitbucket.org" => domain = icons::get("bitbucket"),
                     "dev.azure.com" => domain = icons::get("azure"),
                     _ => {}
                 }
