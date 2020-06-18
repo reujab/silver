@@ -7,13 +7,23 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
     if let Ok(mut repo) = git2::Repository::discover(".") {
         let mut domain = icons::get("git");
         if let Ok(origin) = repo.find_remote("origin") {
-            if let Ok(url) = Url::parse(origin.url().unwrap_or_default()) {
-                match url.domain().unwrap_or_default() {
+            let origin = origin.url().unwrap_or_default();
+            match Url::parse(origin) {
+                Ok(url) => match url.domain().unwrap_or_default() {
                     "github.com" => domain = icons::get("github"),
                     "gitlab.com" => domain = icons::get("gitlab"),
                     "bitbucket.org" => domain = icons::get("bitbucket"),
                     "dev.azure.com" => domain = icons::get("azure"),
                     _ => {}
+                },
+                Err(_) => {
+                    if origin.starts_with("git@github.com:") {
+                        domain = icons::get("github");
+                    } else if origin.starts_with("git@gitlab.com:") {
+                        domain = icons::get("gitlab");
+                    } else if origin.starts_with("git@bitbucket.org:") {
+                        domain = icons::get("bitbucket");
+                    }
                 }
             }
         }
