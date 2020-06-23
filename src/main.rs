@@ -54,7 +54,7 @@ fn main() {
         .get_matches();
 
     match matches.subcommand_name().unwrap() {
-        "init" => match Path::new(&shell).file_stem().unwrap().to_str().unwrap() {
+        "init" => match Path::new(&shell).to_str().unwrap() {
             "bash" => print!("{}", include_str!("init.bash")),
             "zsh" => print!("{}", include_str!("init.zsh")),
             "fish" => print!("{}", include_str!("init.fish")),

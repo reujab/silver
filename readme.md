@@ -33,7 +33,7 @@ On macOS, you will have to do a bit more:
 Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, add this to your `~/.bashrc`/`~/.zshrc`:
 ```sh
 SILVER=(status:black:white dir:blue:black git:green:black cmdtime:magenta:black)
-export SILVER_SHELL=$0 # bash, zsh, or fish
+export SILVER_SHELL=zsh # or bash
 ```
 
 Or add the following to your `~/.config/fish/config.fish`:
