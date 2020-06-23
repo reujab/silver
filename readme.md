@@ -26,6 +26,7 @@ To be able to use the custom icons (which are enabled by default), you must patc
 On macOS, you will have to do a bit more:
 * install [Homebrew](https://brew.sh/)
 * run `brew install coreutils`
+* run `brew install openssl`
 * add `alias date="gdate"` to your shell rc
 
 ### Configuration
