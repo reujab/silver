@@ -1,11 +1,19 @@
 use std::env;
 
-pub fn separator() -> String {
-    env::var("SILVER_SEPARATOR").unwrap_or_else(|_| "\u{e0b0}".to_owned())
+pub fn left_separator() -> String {
+    env::var("SILVER_LEFT_SEPARATOR").unwrap_or_else(|_| "\u{e0b0}".to_owned())
 }
 
-pub fn thin_separator() -> String {
-    env::var("SILVER_THIN_SEPARATOR").unwrap_or_else(|_| "\u{e0b1}".to_owned())
+pub fn thin_left_separator() -> String {
+    env::var("SILVER_THIN_LEFT_SEPARATOR").unwrap_or_else(|_| "\u{e0b1}".to_owned())
+}
+
+pub fn right_separator() -> String {
+    env::var("SILVER_RIGHT_SEPARATOR").unwrap_or_else(|_| "\u{e0b2}".to_owned())
+}
+
+pub fn thin_right_separator() -> String {
+    env::var("SILVER_THIN_RIGHT_SEPARATOR").unwrap_or_else(|_| "\u{e0b3}".to_owned())
 }
 
 pub fn get(id: &str) -> String {

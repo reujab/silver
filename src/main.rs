@@ -43,13 +43,22 @@ fn main() {
             clap::SubCommand::with_name("init").about("Initializes the shell for use of silver"),
         )
         .subcommand(
-            clap::SubCommand::with_name("print")
+            clap::SubCommand::with_name("lprint")
                 .arg(
                     clap::Arg::with_name("segments")
-                        .required(true)
+                        .required(false)
                         .min_values(1),
                 )
-                .about("Prints the prompt with the specified modules"),
+                .about("Prints the left prompt with the specified modules"),
+        )
+        .subcommand(
+            clap::SubCommand::with_name("rprint")
+                .arg(
+                    clap::Arg::with_name("segments")
+                        .required(false)
+                        .min_values(0),
+                )
+                .about("Prints the right prompt with the specified modules"),
         )
         .get_matches();
 
@@ -64,14 +73,33 @@ fn main() {
                 shell
             ),
         },
-        "print" => print::prompt(
+        "lprint" => print::left_prompt(
             &shell,
-            matches.subcommand_matches("print").unwrap().args["segments"]
-                .vals
+            matches
+                .subcommand_matches("lprint")
+                .unwrap()
+                .args
+                .get("segments")
+                .map(|v| &v.vals)
+                .unwrap_or(&vec![])
                 // converts OsStrs to Strings, which are Sized
                 .iter()
                 .map(|s| s.to_str().unwrap().to_owned())
-                .collect::<Vec<String>>(),
+                .collect(),
+        ),
+        "rprint" => print::right_prompt(
+            &shell,
+            matches
+                .subcommand_matches("rprint")
+                .unwrap()
+                .args
+                .get("segments")
+                .map(|v| &v.vals)
+                .unwrap_or(&vec![])
+                // converts OsStrs to Strings, which are Sized
+                .iter()
+                .map(|s| s.to_str().unwrap().to_owned())
+                .collect(),
         ),
         _ => panic!(),
     }
