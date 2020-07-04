@@ -1,5 +1,5 @@
 function fish_prompt
-    test -n "$SILVER_LEFT"; or set SILVER_LEFT $SILVER
+    test -n "$SILVER_LEFT"; or set -l SILVER_LEFT $SILVER
     env code=$status jobs=(count (jobs -p)) cmdtime={$CMD_DURATION} silver lprint $SILVER_LEFT
     echo -n ' '
 end

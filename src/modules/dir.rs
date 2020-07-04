@@ -7,9 +7,7 @@ use Segment;
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let mut wd = match env::current_dir() {
         Ok(wd) => wd,
-        Err(_) => {
-            return
-        }
+        Err(_) => return,
     };
 
     // processes aliases

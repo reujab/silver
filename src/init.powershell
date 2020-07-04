@@ -3,6 +3,7 @@ function prompt {
     $env:code = $LASTEXITCODE
     $env:cmdtime = [uint64]($lastCommand.EndExecutionTime - $lastCommand.StartExecutionTime).TotalMilliseconds
     $env:jobs = @(Get-Job).Count
-    Start-Process -Wait -NoNewWindow silver.exe -ArgumentList (@('print') + $SILVER_LEFT)
+    Start-Process -Wait -NoNewWindow silver -ArgumentList (@('lprint') +
+    ($SILVER_LEFT ? $SILVER_LEFT : $SILVER))
     "$([char]0x1b)[0m"
 }

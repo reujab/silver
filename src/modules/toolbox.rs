@@ -1,9 +1,9 @@
-use Segment;
 use icons;
 use std::env;
+use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
-    if let Err(_) = env::var("TOOLBOX_PATH") {
+    if env::var("TOOLBOX_PATH").is_err() {
         return;
     }
 
