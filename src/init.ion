@@ -1,0 +1,3 @@
+fn PROMPT
+  env code=$? jobs=$(jobs -p | wc -l) silver lprint @SILVER_LEFT
+end
