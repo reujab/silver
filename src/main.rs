@@ -67,42 +67,45 @@ fn main() {
                 shell
             ),
         },
-        "lprint" => print::prompt(
-            &shell,
-            matches
-                .subcommand_matches("lprint")
-                .unwrap()
-                .args
-                .get("segments")
-                .map(|v| &v.vals)
-                .unwrap_or(&vec![])
-                // converts OsStrs to Strings, which are Sized
-                .iter()
-                .map(|s| s.to_str().unwrap().to_owned())
-                .collect(),
-            |_, (_, c, n)| {
-                vec![
-                    (
-                        c.background.to_owned(),
-                        c.foreground.to_owned(),
-                        format!(" {} ", c.value),
-                    ),
-                    if n.background == c.background {
+        "lprint" => {
+            print::prompt(
+                &shell,
+                matches
+                    .subcommand_matches("lprint")
+                    .unwrap()
+                    .args
+                    .get("segments")
+                    .map(|v| &v.vals)
+                    .unwrap_or(&vec![])
+                    // converts OsStrs to Strings, which are Sized
+                    .iter()
+                    .map(|s| s.to_str().unwrap().to_owned())
+                    .collect(),
+                |_, (_, c, n)| {
+                    vec![
                         (
                             c.background.to_owned(),
                             c.foreground.to_owned(),
-                            icons::thin_left_separator(),
-                        )
-                    } else {
-                        (
-                            n.background.to_owned(),
-                            c.background.to_owned(),
-                            icons::left_separator(),
-                        )
-                    },
-                ]
-            },
-        ),
+                            format!(" {} ", c.value),
+                        ),
+                        if n.background == c.background {
+                            (
+                                c.background.to_owned(),
+                                c.foreground.to_owned(),
+                                icons::thin_left_separator(),
+                            )
+                        } else {
+                            (
+                                n.background.to_owned(),
+                                c.background.to_owned(),
+                                icons::left_separator(),
+                            )
+                        },
+                    ]
+                },
+            );
+            print!(" ")
+        }
         "rprint" => print::prompt(
             &shell,
             matches
