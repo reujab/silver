@@ -62,6 +62,7 @@ fn main() {
             "zsh" => print!("{}", include_str!("init.zsh")),
             "fish" => print!("{}", include_str!("init.fish")),
             "powershell" => print!("{}", include_str!("init.powershell")),
+            "ion" => print!(include_str!("init.ion")),
             _ => panic!(
                 "unknown $SILVER_SHELL: \"{}\". Supported shells: bash, zsh, fish, powershell",
                 shell
