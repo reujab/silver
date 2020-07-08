@@ -1,11 +1,11 @@
 #[cfg(unix)]
-use libc;
+
 #[cfg(unix)]
 use std::ffi::CString;
 
-use icons;
+use crate::icons;
+use crate::Segment;
 use std::env;
-use Segment;
 
 #[cfg(target_os = "windows")]
 fn is_root() -> bool {

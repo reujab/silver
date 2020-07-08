@@ -1,21 +1,3 @@
-#[macro_use]
-extern crate lazy_static;
-
-extern crate chrono;
-extern crate clap;
-extern crate dirs;
-extern crate git2;
-extern crate hostname;
-extern crate humantime;
-extern crate ini;
-extern crate libc;
-extern crate regex;
-extern crate url;
-#[cfg(not(target_os = "windows"))]
-extern crate users;
-#[cfg(target_os = "windows")]
-extern crate winapi;
-
 mod icons;
 mod modules;
 mod print;

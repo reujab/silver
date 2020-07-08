@@ -1,7 +1,7 @@
-use git2;
-use icons;
+use crate::icons;
+use crate::Segment;
+
 use url::Url;
-use Segment;
 
 pub fn segment(segment: &mut Segment, args: &[&str]) {
     if let Ok(mut repo) = git2::Repository::discover(".") {
@@ -62,11 +62,7 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
         {
             for status in statuses.iter() {
                 // dirty
-                segment.background = if args.is_empty() {
-                    "yellow"
-                } else {
-                    args[0]
-                }.to_owned();
+                segment.background = if args.is_empty() { "yellow" } else { args[0] }.to_owned();
 
                 let status = status.status();
                 if modified.is_empty() && status.is_wt_new()
