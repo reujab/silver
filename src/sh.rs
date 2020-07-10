@@ -5,7 +5,12 @@ lazy_static! {
     static ref HEX: Regex = Regex::new(r"^[a-f\d]{6}$").unwrap();
 }
 
-fn code(color: &str, prefix: &str) -> Option<String> {
+fn code(color: &str, prefix: &str, light_prefix: &str) -> Option<String> {
+    let (color, prefix) = if color.starts_with("light") {
+        (&color[5..], light_prefix)
+    } else {
+        (color, prefix)
+    };
     match color {
         "none" => Some("0".to_owned()),
         "black" => Some(format!("{}0", prefix)),
@@ -20,8 +25,14 @@ fn code(color: &str, prefix: &str) -> Option<String> {
     }
 }
 
-fn escape(color: &str, prefix: &str, before_color: &str, after_color: &str) -> String {
-    match code(&color, &prefix) {
+fn escape(
+    color: &str,
+    prefix: &str,
+    light_prefix: &str,
+    before_color: &str,
+    after_color: &str,
+) -> String {
+    match code(&color, &prefix, &light_prefix) {
         // 16 colors
         Some(code) => format!("{}\x1b[{}m{}", before_color, code, after_color),
         None => match color.parse::<u8>() {
@@ -50,31 +61,17 @@ fn escape(color: &str, prefix: &str, before_color: &str, after_color: &str) -> S
 
 pub fn escape_background(shell: &str, color: &str) -> String {
     match shell {
-        "zsh" => {
-            if HEX.is_match(&color) {
-                format!("%{{\x1b[48;2;{}m%}}", escape_hex(color))
-            } else if color == "none" {
-                format!("%k")
-            } else {
-                format!("%K{{{}}}", color)
-            }
-        }
-        "bash" => escape(color, "4", "\\[", "\\]"),
-        _ => escape(color, "4", "", ""),
+        "zsh" => escape(color, "4", "10", "%{", "%}"),
+        "bash" => escape(color, "4", "10", "\\[", "\\]"),
+        _ => escape(color, "4", "10", "", ""),
     }
 }
 
 pub fn escape_foreground(shell: &str, color: &str) -> String {
     match shell {
-        "zsh" => {
-            if HEX.is_match(&color) {
-                format!("%{{\x1b[38;2;{}m%}}", escape_hex(color))
-            } else {
-                format!("%F{{{}}}", color)
-            }
-        }
-        "bash" => escape(color, "3", "\\[", "\\]"),
-        _ => escape(color, "3", "", ""),
+        "zsh" => escape(color, "3", "9", "%{", "%}"),
+        "bash" => escape(color, "3", "9", "\\[", "\\]"),
+        _ => escape(color, "3", "9", "", ""),
     }
 }
 
