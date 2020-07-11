@@ -55,6 +55,7 @@ fn main() {
         )
         .subcommand(
             clap::SubCommand::with_name("lprint")
+                .alias("print")
                 .arg(
                     clap::Arg::with_name("segments")
                         .required(false)
