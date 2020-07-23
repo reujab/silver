@@ -1,6 +1,6 @@
-use icons;
+use crate::icons;
+use crate::Segment;
 use std::env;
-use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     if env::var("TOOLBOX_PATH").is_err() {

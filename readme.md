@@ -48,12 +48,12 @@ Now that silver is configured, you need to evaluate its bootstrap code.
 
 `~/.bashrc`/`~/.zshrc`:
 ```sh
-eval "$(silver init)"
+source <(silver init)
 ```
 
 `~/.config/fish/config.fish`:
 ```fish
-eval (silver init)
+silver init | source
 ```
 
 ## Documentation

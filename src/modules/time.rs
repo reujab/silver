@@ -1,6 +1,6 @@
-use chrono;
+use crate::Segment;
+
 use chrono::Timelike;
-use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let now = chrono::offset::Local::now();

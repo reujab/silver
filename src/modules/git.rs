@@ -1,7 +1,7 @@
-use git2;
-use icons;
+use crate::icons;
+use crate::Segment;
+
 use url::Url;
-use Segment;
 
 pub fn segment(segment: &mut Segment, args: &[&str]) {
     if let Ok(mut repo) = git2::Repository::discover(".") {
