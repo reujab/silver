@@ -1,8 +1,8 @@
 #[cfg(target_os = "linux")]
 use ini::Ini;
 
-use icons;
-use Segment;
+use crate::icons;
+use crate::Segment;
 
 #[cfg(target_os = "macos")]
 pub fn segment(segment: &mut Segment, _: &[&str]) {

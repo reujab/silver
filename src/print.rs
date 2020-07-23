@@ -1,7 +1,7 @@
-use icons;
-use modules;
-use sh;
-use Segment;
+use crate::icons;
+use crate::modules;
+use crate::sh;
+use crate::Segment;
 
 pub fn prompt(shell: &str, args: Vec<String>) {
     let mut segments = vec![];

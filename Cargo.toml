@@ -9,6 +9,7 @@ readme = "readme.md"
 keywords = ["shell", "prompt", "powerline", "agnoster", "icons"]
 categories = ["command-line-utilities"]
 license = "Unlicense"
+edition = "2018"
 
 [dependencies]
 chrono = "0.4"
