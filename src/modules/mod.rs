@@ -10,7 +10,7 @@ mod toolbox;
 mod user;
 mod virtualenv;
 
-use Segment;
+use crate::Segment;
 
 pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
     match module {

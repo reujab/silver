@@ -1,3 +1,4 @@
+use lazy_static::lazy_static;
 use regex::Regex;
 
 lazy_static! {
@@ -54,7 +55,7 @@ pub fn escape_background(shell: &str, color: &str) -> String {
             if HEX.is_match(&color) {
                 format!("%{{\x1b[48;2;{}m%}}", escape_hex(color))
             } else if color == "none" {
-                format!("%k")
+                "%k".to_string()
             } else {
                 format!("%K{{{}}}", color)
             }

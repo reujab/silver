@@ -1,5 +1,5 @@
+use crate::Segment;
 use std::env;
-use Segment;
 
 pub fn segment(segment: &mut Segment, args: &[&str]) {
     if args.is_empty() {

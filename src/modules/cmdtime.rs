@@ -1,7 +1,7 @@
-use humantime;
+use crate::Segment;
+
 use std::env;
 use std::time::Duration;
-use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     if let Ok(cmdtime) = env::var("cmdtime") {

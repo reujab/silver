@@ -1,7 +1,7 @@
-use hostname;
+use crate::Segment;
+
 #[cfg(not(target_os = "windows"))]
-use users;
-use Segment;
+
 
 #[cfg(target_os = "windows")]
 mod users {

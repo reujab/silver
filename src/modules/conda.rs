@@ -1,5 +1,5 @@
+use crate::Segment;
 use std::env;
-use Segment;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     segment.value = env::var("CONDA_PROMPT_MODIFIER")
