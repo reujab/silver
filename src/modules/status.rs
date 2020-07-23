@@ -1,6 +1,4 @@
 #[cfg(unix)]
-
-#[cfg(unix)]
 use std::ffi::CString;
 
 use crate::icons;

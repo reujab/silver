@@ -1,8 +1,5 @@
 use crate::Segment;
 
-#[cfg(not(target_os = "windows"))]
-
-
 #[cfg(target_os = "windows")]
 mod users {
     use std::env;
