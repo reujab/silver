@@ -55,9 +55,18 @@ export SILVER_SHELL = ion
 
 Now that silver is configured, you need to evaluate its bootstrap code.
 
-`~/.bashrc`/`~/.zshrc`/`~/.config/ion/initrc`:
+`~/.bashrc`/`~/.zshrc`:
 ```sh
 source <(silver init)
+```
+
+`~/.config/ion/initrc`:
+```sh
+let tmp = $(mktemp)
+silver init > $tmp
+source $tmp
+rm -f $tmp
+drop tmp
 ```
 
 `~/.config/fish/config.fish`:
