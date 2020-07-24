@@ -5,7 +5,7 @@ A cross-shell customizable powerline-like prompt heavily inspired by [Agnoster](
 ## How does it work?
 Unlike most shell prompts, silver is not written in shell script, but entirely in Rust.
 
-When `silver init` is run, it outputs shell code that sets your prompt to run `silver prompt`, which outputs the actual prompt. The `silver prompt` command relies on environment variables for configuration.
+When `silver init` is run, it outputs shell code that sets your left prompt to run `silver lprompt` and right prompt to `silver rprompt`, which output the actual prompt. The `silver lprompt` and `silver rprompt` commands rely on environment variables for configuration.
 
 ## Getting started
 Since silver is not written in shell script, it should theoretically be compatible with any shell, but the three supported shells are Bash, Zsh, and fish.
@@ -32,13 +32,15 @@ On macOS, you will have to do a bit more:
 ### Configuration
 Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, add this to your `~/.bashrc`/`~/.zshrc`:
 ```sh
-SILVER=(status:black:white dir:blue:black git:green:black cmdtime:magenta:black)
+SILVER_LEFT=(dir:blue:black git:green:black)
+SILVER_RIGHT=(status:white:black cmdtime:magenta:black env:green:black:SILVER_SHELL)
 export SILVER_SHELL=zsh # or bash
 ```
 
 Or add the following to your `~/.config/fish/config.fish`:
 ```fish
-set SILVER status:black:white dir:blue:black git:green:black cmdtime:magenta:black
+set SILVER_LEFT dir:blue:black git:green:black 
+set SILVER_RIGHT status:white:black cmdtime:magenta:black env:green:black:SILVER_SHELL
 set -x SILVER_SHELL fish
 ```
 

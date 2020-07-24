@@ -8,10 +8,21 @@ use clap::AppSettings;
 use std::env;
 use std::path::Path;
 
+#[derive(Clone, Debug)]
 pub struct Segment {
     background: String,
     foreground: String,
     value: String,
+}
+
+impl Default for Segment {
+    fn default() -> Self {
+        Self {
+            background: "none".to_owned(),
+            foreground: "none".to_owned(),
+            value: String::new(),
+        }
+    }
 }
 
 fn main() {
@@ -25,13 +36,23 @@ fn main() {
             clap::SubCommand::with_name("init").about("Initializes the shell for use of silver"),
         )
         .subcommand(
-            clap::SubCommand::with_name("print")
+            clap::SubCommand::with_name("lprint")
+                .alias("print")
                 .arg(
                     clap::Arg::with_name("segments")
-                        .required(true)
-                        .min_values(1),
+                        .required(false)
+                        .min_values(0),
                 )
-                .about("Prints the prompt with the specified modules"),
+                .about("Prints the left prompt with the specified modules"),
+        )
+        .subcommand(
+            clap::SubCommand::with_name("rprint")
+                .arg(
+                    clap::Arg::with_name("segments")
+                        .required(false)
+                        .min_values(0),
+                )
+                .about("Prints the right prompt with the specified modules"),
         )
         .get_matches();
 
@@ -46,14 +67,77 @@ fn main() {
                 shell
             ),
         },
-        "print" => print::prompt(
+        "lprint" => print::prompt(
             &shell,
-            matches.subcommand_matches("print").unwrap().args["segments"]
-                .vals
+            matches
+                .subcommand_matches("lprint")
+                .unwrap()
+                .args
+                .get("segments")
+                .map(|v| &v.vals)
+                .unwrap_or(&vec![])
                 // converts OsStrs to Strings, which are Sized
                 .iter()
                 .map(|s| s.to_str().unwrap().to_owned())
-                .collect::<Vec<String>>(),
+                .collect(),
+            |_, (_, c, n)| {
+                vec![
+                    (
+                        c.background.to_owned(),
+                        c.foreground.to_owned(),
+                        format!(" {} ", c.value),
+                    ),
+                    if n.background == c.background {
+                        (
+                            c.background.to_owned(),
+                            c.foreground.to_owned(),
+                            icons::thin_left_separator(),
+                        )
+                    } else {
+                        (
+                            n.background.to_owned(),
+                            c.background.to_owned(),
+                            icons::left_separator(),
+                        )
+                    },
+                ]
+            },
+        ),
+        "rprint" => print::prompt(
+            &shell,
+            matches
+                .subcommand_matches("rprint")
+                .unwrap()
+                .args
+                .get("segments")
+                .map(|v| &v.vals)
+                .unwrap_or(&vec![])
+                // converts OsStrs to Strings, which are Sized
+                .iter()
+                .map(|s| s.to_str().unwrap().to_owned())
+                .collect(),
+            |_, (p, c, _)| {
+                vec![
+                    if p.background == c.background {
+                        (
+                            c.background.to_owned(),
+                            c.foreground.to_owned(),
+                            icons::thin_right_separator(),
+                        )
+                    } else {
+                        (
+                            p.background.to_owned(),
+                            c.background.to_owned(),
+                            icons::right_separator(),
+                        )
+                    },
+                    (
+                        c.background.to_owned(),
+                        c.foreground.to_owned(),
+                        format!(" {} ", c.value),
+                    ),
+                ]
+            },
         ),
         _ => panic!(),
     }
