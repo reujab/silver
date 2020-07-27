@@ -5,8 +5,8 @@ mod sh;
 
 use clap::App;
 use clap::AppSettings;
-use std::env;
 use std::path::Path;
+use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
 
 #[derive(Clone, Debug)]
 pub struct Segment {
@@ -26,7 +26,10 @@ impl Default for Segment {
 }
 
 fn main() {
-    let shell = env::var("SILVER_SHELL").unwrap_or_default();
+    let mut sys = System::new_all();
+    let process = sys.get_process(get_current_pid().unwrap()).unwrap();
+    let parent = sys.get_process(process.parent().unwrap()).unwrap();
+    let shell = parent.name();
 
     let matches = App::new("silver")
         .setting(AppSettings::SubcommandRequiredElseHelp)

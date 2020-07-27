@@ -23,6 +23,7 @@ libc = "0.2"
 regex = "1"
 rust-ini = "0.15"
 url = "2"
+sysinfo = "0.15"
 
 [target.'cfg(not(windows))'.dependencies]
 users = "0.10"
