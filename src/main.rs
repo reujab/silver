@@ -26,7 +26,7 @@ impl Default for Segment {
 }
 
 fn main() {
-    let mut sys = System::new_all();
+    let sys = System::new_all();
     let process = sys.get_process(get_current_pid().unwrap()).unwrap();
     let parent = sys.get_process(process.parent().unwrap()).unwrap();
     let shell = parent.name();

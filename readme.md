@@ -36,14 +36,14 @@ On macOS, you will have to do a bit more:
 Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, add this to your `~/.bashrc`/`~/.zshrc`:
 ```sh
 SILVER_LEFT=(dir:blue:black git:green:black)
-SILVER_RIGHT=(status:white:black cmdtime:magenta:black env:green:black:SILVER_SHELL)
+SILVER_RIGHT=(status:white:black cmdtime:magenta:black shell:green:black)
 export SILVER_SHELL=zsh # or bash
 ```
 
 Or add the following to your `~/.config/fish/config.fish`:
 ```fish
 set SILVER_LEFT dir:blue:black git:green:black 
-set SILVER_RIGHT status:white:black cmdtime:magenta:black env:green:black:SILVER_SHELL
+set SILVER_RIGHT status:white:black cmdtime:magenta:black shell:green:black
 set -x SILVER_SHELL fish
 ```
 
