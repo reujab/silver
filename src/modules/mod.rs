@@ -4,6 +4,7 @@ mod dir;
 mod env;
 mod git;
 mod os;
+mod shell;
 mod status;
 mod time;
 mod toolbox;
@@ -24,6 +25,7 @@ pub fn handle(module: &str, segment: &mut Segment, args: &[&str]) {
         "virtualenv" => virtualenv::segment(segment, args),
         "conda" => conda::segment(segment, args),
         "toolbox" => toolbox::segment(segment, args),
+        "shell" => shell::segment(segment, args),
 
         "env" => env::segment(segment, args),
         _ => panic!("unknown module, {}", module),
