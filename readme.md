@@ -37,20 +37,17 @@ Now that you have silver installed, you need to configure it. To have your promp
 ```sh
 SILVER_LEFT=(dir:blue:black git:green:black)
 SILVER_RIGHT=(status:white:black cmdtime:magenta:black shell:green:black)
-export SILVER_SHELL=zsh # or bash
 ```
 
 Or add the following to your `~/.config/fish/config.fish`:
 ```fish
 set SILVER_LEFT dir:blue:black git:green:black 
 set SILVER_RIGHT status:white:black cmdtime:magenta:black shell:green:black
-set -x SILVER_SHELL fish
 ```
 
 In case of Ion add this to your `~/.config/ion/initrc`:
 ```sh
 let SILVER_LEFT = [ status:black:white dir:blue:black git:green:black cmdtime:magenta:black ]
-export SILVER_SHELL = ion
 ```
 
 Now that silver is configured, you need to evaluate its bootstrap code.

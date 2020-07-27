@@ -67,7 +67,7 @@ fn main() {
             "powershell" => print!("{}", include_str!("init.powershell")),
             "ion" => print!(include_str!("init.ion")),
             _ => panic!(
-                "unknown $SILVER_SHELL: \"{}\". Supported shells: bash, zsh, fish, powershell",
+                "unknown shell: \"{}\". Supported shells: bash, zsh, fish, powershell",
                 shell
             ),
         },
