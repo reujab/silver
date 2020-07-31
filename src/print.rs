@@ -1,7 +1,7 @@
-use std::iter::once;
 use crate::modules;
 use crate::sh;
 use crate::Segment;
+use std::iter::once;
 
 pub fn prompt<T, U>(shell: &str, args: Vec<String>, f: T)
 where
