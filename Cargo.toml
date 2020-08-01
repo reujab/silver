@@ -8,7 +8,7 @@ repository = "https://github.com/reujab/silver"
 readme = "readme.md"
 keywords = ["shell", "prompt", "powerline", "agnoster", "icons"]
 categories = ["command-line-utilities"]
-license = "Unlicense"
+license = "GPL-3.0-or-later"
 edition = "2018"
 
 [dependencies]
