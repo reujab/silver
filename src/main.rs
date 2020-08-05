@@ -1,17 +1,25 @@
+mod cli;
 mod config;
 mod icons;
 mod modules;
 mod print;
 mod sh;
 
-use clap::App;
-use clap::AppSettings;
-use once_cell::sync::Lazy;
-use std::path::Path;
+use cli::*;
+use once_cell::sync::{Lazy, OnceCell};
+use std::path::{Path, PathBuf};
 use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
 
-static CONFIG: Lazy<config::Config> =
-    Lazy::new(|| confy::load("silver").expect("Failed to read config"));
+static CONFIG_PATH: OnceCell<PathBuf> = OnceCell::new();
+
+static CONFIG: Lazy<config::Config> = Lazy::new(|| {
+    if let Some(path) = CONFIG_PATH.get() {
+        confy::load_path(path)
+    } else {
+        confy::load("silver")
+    }
+    .expect("Failed to read config")
+});
 
 #[derive(Clone, Debug)]
 pub struct Segment {
@@ -36,37 +44,41 @@ fn main() {
     let parent = sys.get_process(process.parent().unwrap()).unwrap();
     let shell = parent.name();
 
-    let matches = App::new("silver")
-        .setting(AppSettings::SubcommandRequiredElseHelp)
-        .about("a cross-shell customizable powerline-like prompt with icons")
-        .after_help("https://github.com/reujab/silver/wiki")
-        .subcommand(
-            clap::SubCommand::with_name("init").about("Initializes the shell for use of silver"),
-        )
-        .subcommand(
-            clap::SubCommand::with_name("lprint")
-                .alias("print")
-                .about("Prints the left prompt with the specified modules"),
-        )
-        .subcommand(
-            clap::SubCommand::with_name("rprint")
-                .about("Prints the right prompt with the specified modules"),
-        )
-        .get_matches();
+    let opt = cli::Silver::from_args();
 
-    match matches.subcommand_name().unwrap() {
-        "init" => match Path::new(&shell).to_str().unwrap() {
-            "bash" => print!("{}", include_str!("init.bash")),
-            "zsh" => print!("{}", include_str!("init.zsh")),
-            "fish" => print!("{}", include_str!("init.fish")),
-            "powershell" | "pwsh" => print!("{}", include_str!("init.powershell")),
-            "ion" => print!(include_str!("init.ion")),
-            _ => panic!(
-                "unknown shell: \"{}\". Supported shells: bash, zsh, fish, powershell",
-                shell
-            ),
-        },
-        "lprint" => {
+    if let Some(path) = opt.config {
+        let path = Path::new(path.as_str()).canonicalize().unwrap();
+        CONFIG_PATH.set(path).unwrap()
+    }
+
+    match opt.cmd {
+        Command::Init => print!(
+            "{}",
+            match Path::new(&shell).to_str().unwrap() {
+                "bash" => include_str!("init.bash"),
+                "zsh" => include_str!("init.zsh"),
+                "fish" => include_str!("init.fish"),
+                "powershell" | "pwsh" => include_str!("init.powershell"),
+                "ion" => include_str!("init.ion"),
+                _ => panic!(
+                    "unknown shell: \"{}\". Supported shells: bash, zsh, fish, powershell",
+                    shell
+                ),
+            }
+            .replace(
+                "silver",
+                format!(
+                    "silver{}",
+                    if let Some(path) = CONFIG_PATH.get() {
+                        format!(" --config {}", path.display())
+                    } else {
+                        String::new()
+                    }
+                )
+                .as_str()
+            )
+        ),
+        Command::Lprint => {
             print::prompt(&shell, &CONFIG.left, |_, (_, c, n)| {
                 vec![
                     (
@@ -91,7 +103,8 @@ fn main() {
             });
             print!(" ")
         }
-        "rprint" => print::prompt(&shell, &CONFIG.right, |_, (p, c, _)| {
+
+        Command::Rprint => print::prompt(&shell, &CONFIG.right, |_, (p, c, _)| {
             vec![
                 if p.background == c.background {
                     (
@@ -113,6 +126,5 @@ fn main() {
                 ),
             ]
         }),
-        _ => panic!(),
     }
 }
