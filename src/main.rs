@@ -64,7 +64,7 @@ fn main() {
             "bash" => print!("{}", include_str!("init.bash")),
             "zsh" => print!("{}", include_str!("init.zsh")),
             "fish" => print!("{}", include_str!("init.fish")),
-            "powershell" => print!("{}", include_str!("init.powershell")),
+            "powershell" | "pwsh" => print!("{}", include_str!("init.powershell")),
             "ion" => print!(include_str!("init.ion")),
             _ => panic!(
                 "unknown shell: \"{}\". Supported shells: bash, zsh, fish, powershell",
