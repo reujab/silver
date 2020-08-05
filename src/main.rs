@@ -46,20 +46,10 @@ fn main() {
         .subcommand(
             clap::SubCommand::with_name("lprint")
                 .alias("print")
-                .arg(
-                    clap::Arg::with_name("segments")
-                        .required(false)
-                        .min_values(0),
-                )
                 .about("Prints the left prompt with the specified modules"),
         )
         .subcommand(
             clap::SubCommand::with_name("rprint")
-                .arg(
-                    clap::Arg::with_name("segments")
-                        .required(false)
-                        .min_values(0),
-                )
                 .about("Prints the right prompt with the specified modules"),
         )
         .get_matches();
@@ -77,80 +67,52 @@ fn main() {
             ),
         },
         "lprint" => {
-            print::prompt(
-                &shell,
-                matches
-                    .subcommand_matches("lprint")
-                    .unwrap()
-                    .args
-                    .get("segments")
-                    .map(|v| &v.vals)
-                    .unwrap_or(&vec![])
-                    // converts OsStrs to Strings, which are Sized
-                    .iter()
-                    .map(|s| s.to_str().unwrap().to_owned())
-                    .collect(),
-                |_, (_, c, n)| {
-                    vec![
-                        (
-                            c.background.to_owned(),
-                            c.foreground.to_owned(),
-                            format!(" {} ", c.value),
-                        ),
-                        if n.background == c.background {
-                            (
-                                c.background.to_owned(),
-                                c.foreground.to_owned(),
-                                icons::thin_left_separator(),
-                            )
-                        } else {
-                            (
-                                n.background.to_owned(),
-                                c.background.to_owned(),
-                                icons::left_separator(),
-                            )
-                        },
-                    ]
-                },
-            );
-            print!(" ")
-        }
-        "rprint" => print::prompt(
-            &shell,
-            matches
-                .subcommand_matches("rprint")
-                .unwrap()
-                .args
-                .get("segments")
-                .map(|v| &v.vals)
-                .unwrap_or(&vec![])
-                // converts OsStrs to Strings, which are Sized
-                .iter()
-                .map(|s| s.to_str().unwrap().to_owned())
-                .collect(),
-            |_, (p, c, _)| {
+            print::prompt(&shell, &CONFIG.left, |_, (_, c, n)| {
                 vec![
-                    if p.background == c.background {
-                        (
-                            c.background.to_owned(),
-                            c.foreground.to_owned(),
-                            icons::thin_right_separator(),
-                        )
-                    } else {
-                        (
-                            p.background.to_owned(),
-                            c.background.to_owned(),
-                            icons::right_separator(),
-                        )
-                    },
                     (
                         c.background.to_owned(),
                         c.foreground.to_owned(),
                         format!(" {} ", c.value),
                     ),
+                    if n.background == c.background {
+                        (
+                            c.background.to_owned(),
+                            c.foreground.to_owned(),
+                            icons::thin_left_separator(),
+                        )
+                    } else {
+                        (
+                            n.background.to_owned(),
+                            c.background.to_owned(),
+                            icons::left_separator(),
+                        )
+                    },
                 ]
-            },
-        ),
+            });
+            print!(" ")
+        }
+        "rprint" => print::prompt(&shell, &CONFIG.right, |_, (p, c, _)| {
+            vec![
+                if p.background == c.background {
+                    (
+                        c.background.to_owned(),
+                        c.foreground.to_owned(),
+                        icons::thin_right_separator(),
+                    )
+                } else {
+                    (
+                        p.background.to_owned(),
+                        c.background.to_owned(),
+                        icons::right_separator(),
+                    )
+                },
+                (
+                    c.background.to_owned(),
+                    c.foreground.to_owned(),
+                    format!(" {} ", c.value),
+                ),
+            ]
+        }),
         _ => panic!(),
     }
 }
