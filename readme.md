@@ -30,7 +30,7 @@ On macOS, you will have to do a bit more:
 * install [Homebrew](https://brew.sh/)
 * run `brew install coreutils`
 * run `brew install openssl`
-* add `alias date="gdate"` to your shell rc
+* add `alias date="gdate"` to your `.zshrc`
 
 ### Configuration
 Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, add this to your `~/.bashrc`/`~/.zshrc`:
