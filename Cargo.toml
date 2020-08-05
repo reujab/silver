@@ -28,6 +28,7 @@ libc = "0.2"
 regex = "1"
 rust-ini = "0.15"
 url = "2"
+shellexpand = "2.0"
 sysinfo = "0.15"
 
 [dependencies.confy]

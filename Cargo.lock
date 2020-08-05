@@ -717,6 +717,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "shellexpand"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a2b22262a9aaf9464d356f656fea420634f78c881c5eebd5ef5e66d8b9bc603"
+dependencies = [
+ "dirs",
+]
+
+[[package]]
 name = "silver"
 version = "1.1.0"
 dependencies = [
@@ -735,6 +744,7 @@ dependencies = [
  "regex",
  "rust-ini",
  "serde",
+ "shellexpand",
  "structopt",
  "sysinfo",
  "url",

@@ -16,24 +16,36 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         .dir
         .aliases
         .iter()
-        .map(|(i, j)| (j.to_owned(), i.to_owned()))
+        .flat_map(|(i, j)| {
+            if let Ok(p) = Path::new(
+                &shellexpand::full_with_context_no_errors(j, dirs::home_dir, |s| {
+                    env::var(s).map(Some).unwrap_or_default()
+                })
+                .into_owned(),
+            )
+            .canonicalize()
+            {
+                Some((p, Path::new(i).to_owned()))
+            } else {
+                None
+            }
+        })
         .collect::<Vec<_>>();
     // default home alias
     if let Some(home) = dirs::home_dir() {
-        aliases.push((home.to_str().unwrap().to_owned(), icons::get("home")))
+        aliases.push((home, Path::new(&icons::get("home")).to_owned()))
     }
     // sorts from deepest alias to shallowest
     aliases.sort_by(|a, b| {
-        Path::new(&a.0)
-            .iter()
+        a.0.iter()
             .count()
-            .partial_cmp(&Path::new(&b.0).iter().count())
+            .partial_cmp(&b.0.iter().count())
             .unwrap()
             .reverse()
     });
     for (dir, alias) in aliases {
         wd = match wd.strip_prefix(dir) {
-            Ok(stripped) => Path::new(&alias).join(stripped.to_path_buf()),
+            Ok(stripped) => alias.join(stripped.to_path_buf()),
             Err(_) => wd.clone(),
         }
     }
