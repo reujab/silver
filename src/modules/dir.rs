@@ -1,5 +1,6 @@
 use crate::icons;
 use crate::Segment;
+use crate::CONFIG;
 
 use std::env;
 use std::path::Path;
@@ -11,41 +12,34 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     };
 
     // processes aliases
-    let mut aliases = match env::var("SILVER_DIR_ALIASES") {
-        Ok(var) => var
-            .split(':')
-            .map(|alias| alias.to_owned())
-            .collect::<Vec<String>>()
-            .chunks_exact(2)
-            .map(|alias| alias.to_owned())
-            .collect::<Vec<Vec<String>>>(),
-        Err(_) => vec![],
-    };
+    let mut aliases = CONFIG
+        .dir
+        .aliases
+        .iter()
+        .map(|(i, j)| (j.to_owned(), i.to_owned()))
+        .collect::<Vec<_>>();
     // default home alias
     if let Some(home) = dirs::home_dir() {
-        aliases.push(vec![home.to_str().unwrap().to_owned(), icons::get("home")])
+        aliases.push((home.to_str().unwrap().to_owned(), icons::get("home")))
     }
     // sorts from deepest alias to shallowest
     aliases.sort_by(|a, b| {
-        Path::new(&a[0])
+        Path::new(&a.0)
             .iter()
             .count()
-            .partial_cmp(&Path::new(&b[0]).iter().count())
+            .partial_cmp(&Path::new(&b.0).iter().count())
             .unwrap()
             .reverse()
     });
-    for alias in aliases {
-        let dir = &alias[0];
-        let icon = &alias[1];
+    for (dir, alias) in aliases {
         wd = match wd.strip_prefix(dir) {
-            Ok(stripped) => Path::new(icon).join(stripped.to_path_buf()),
+            Ok(stripped) => Path::new(&alias).join(stripped.to_path_buf()),
             Err(_) => wd.clone(),
         }
     }
 
     // processes length
-    if let Ok(len) = env::var("SILVER_DIR_LENGTH") {
-        let len = len.parse::<usize>().expect("invalid $SILVER_DIR_LENGTH");
+    if let Some(len) = CONFIG.dir.length {
         let iter_len = wd.iter().count();
         let mut i = 0;
         wd = wd

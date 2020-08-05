@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt;
+use std::time::Duration;
 
 type Prompt = Vec<Segment>;
 
@@ -16,6 +17,11 @@ pub struct Config {
     pub icons: HashMap<String, String>,
     #[serde(default)]
     pub icon_set: IconSet,
+    #[serde(default)]
+    #[serde(with = "humantime_serde")]
+    pub cmdtime_threshold: Duration,
+    #[serde(default)]
+    pub dir: Dir,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -60,6 +66,14 @@ pub enum IconSet {
     Nerd,
     Unicode,
     ASCII,
+}
+
+#[derive(Debug, Serialize, Deserialize, Default)]
+pub struct Dir {
+    #[serde(default)]
+    pub aliases: HashMap<String, String>,
+    #[serde(default)]
+    pub length: Option<usize>,
 }
 
 impl Default for Separators {
