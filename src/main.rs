@@ -78,13 +78,13 @@ fn main() {
                         (
                             c.background.to_owned(),
                             c.foreground.to_owned(),
-                            icons::thin_left_separator(),
+                            CONFIG.separator.left.thin.to_owned(),
                         )
                     } else {
                         (
                             n.background.to_owned(),
                             c.background.to_owned(),
-                            icons::left_separator(),
+                            CONFIG.separator.left.thick.to_owned(),
                         )
                     },
                 ]
@@ -97,13 +97,13 @@ fn main() {
                     (
                         c.background.to_owned(),
                         c.foreground.to_owned(),
-                        icons::thin_right_separator(),
+                        CONFIG.separator.right.thin.to_owned(),
                     )
                 } else {
                     (
                         p.background.to_owned(),
                         c.background.to_owned(),
-                        icons::right_separator(),
+                        CONFIG.separator.right.thick.to_owned(),
                     )
                 },
                 (

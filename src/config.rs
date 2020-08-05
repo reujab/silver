@@ -65,11 +65,11 @@ pub enum IconSet {
 impl Default for Separators {
     fn default() -> Self {
         Self {
-            right: Separator {
+            left: Separator {
                 thick: "\u{e0b0}".into(),
                 thin: "\u{e0b1}".into(),
             },
-            left: Separator {
+            right: Separator {
                 thick: "\u{e0b2}".into(),
                 thin: "\u{e0b3}".into(),
             },
