@@ -1,3 +1,4 @@
+mod config;
 mod icons;
 mod modules;
 mod print;
@@ -5,8 +6,12 @@ mod sh;
 
 use clap::App;
 use clap::AppSettings;
+use once_cell::sync::Lazy;
 use std::path::Path;
 use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
+
+static CONFIG: Lazy<config::Config> =
+    Lazy::new(|| confy::load("silver").expect("Failed to read config"));
 
 #[derive(Clone, Debug)]
 pub struct Segment {
