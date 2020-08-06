@@ -8,8 +8,7 @@ A cross-shell customizable powerline-like prompt heavily inspired by [Agnoster](
 ## How does it work?
 Unlike most shell prompts, silver is not written in shell script, but entirely in Rust.
 
-When `silver init` is run, it outputs shell code that sets your left prompt to run `silver lprompt` and right prompt to `silver rprompt`, which output the actual prompt. The `silver lprompt` and `silver rprompt` commands rely on environment variables for configuration.
-
+When `silver init` is run, it outputs shell code that sets your left prompt to run `silver lprompt` and right prompt to `silver rprompt`, which output the actual prompt.
 ## Getting started
 Since silver is not written in shell script, it should theoretically be compatible with any shell, but the three supported shells are Bash, Zsh, and fish.
 
@@ -33,21 +32,32 @@ On macOS, you will have to do a bit more:
 * add `alias date="gdate"` to your `.zshrc`
 
 ### Configuration
-Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, add this to your `~/.bashrc`/`~/.zshrc`:
-```sh
-SILVER_LEFT=(dir:blue:black git:green:black)
-SILVER_RIGHT=(status:white:black cmdtime:magenta:black shell:green:black)
-```
+Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, create `silver.toml` with the following content:
+```toml
+[[left]]
+name = "dir"
+color.background = "blue"
+color.foreground = "black"
 
-Or add the following to your `~/.config/fish/config.fish`:
-```fish
-set SILVER_LEFT dir:blue:black git:green:black 
-set SILVER_RIGHT status:white:black cmdtime:magenta:black shell:green:black
-```
+[[left]]
+name = "git"
+color.background = "green"
+color.foreground = "black"
 
-In case of Ion add this to your `~/.config/ion/initrc`:
-```sh
-let SILVER_LEFT = [ status:black:white dir:blue:black git:green:black cmdtime:magenta:black ]
+[[right]]
+name = "status"
+color.background = "white"
+color.foreground = "black"
+
+[[right]]
+name = "cmdtime"
+color.background = "magenta"
+color.foreground = "black"
+
+[[right]]
+name = "shell"
+color.background = "green"
+color.foreground = "black"
 ```
 
 Now that silver is configured, you need to evaluate its bootstrap code.
@@ -93,6 +103,10 @@ Documentation is available on [the wiki](https://github.com/reujab/silver/wiki).
 			* source code for the [`user`](https://github.com/reujab/silver/wiki/User) module
 		* [`virtualenv.rs`](src/modules/virtualenv.rs)
 			* source code for the [`virtualenv`](https://github.com/reujab/silver/wiki/virtualenv) module
+	* [`cli.rs`](src/cli.rs)
+		* parses command line arguments
+	* [`config.rs`](src/config.rs)
+		* parses TOML
 	* [`icons.rs`](src/icons.rs)
 		* processes icons, separators, and Unicode
 	* [`init.bash`](src/init.bash)
@@ -102,7 +116,7 @@ Documentation is available on [the wiki](https://github.com/reujab/silver/wiki).
 	* [`init.zsh`](src/init.zsh)
 		* bootstrap code for Zsh
 	* [`main.rs`](src/main.rs)
-		* parses command line arguments
+		* does all the magic
 	* [`print.rs`](src/print.rs)
 		* prints prompt segments
 	* [`sh.rs`](src/sh.rs)

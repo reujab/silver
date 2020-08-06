@@ -1,9 +1,10 @@
+use crate::config;
 use crate::modules;
 use crate::sh;
 use crate::Segment;
 use std::iter::once;
 
-pub fn prompt<T, U>(shell: &str, args: Vec<String>, f: T)
+pub fn prompt<T, U>(shell: &str, args: &Vec<config::Segment>, f: T)
 where
     T: Fn(usize, (&Segment, &Segment, &Segment)) -> U,
     U: IntoIterator<Item = (String, String, String)>,
@@ -12,17 +13,20 @@ where
         .chain(
             args.into_iter()
                 .map(|arg| {
-                    let fields: Vec<_> = arg.split(':').collect();
-                    if fields.len() < 3 {
-                        panic!("invalid argument, {}", arg);
-                    }
-
                     let mut segment = Segment {
-                        background: fields[1].to_owned(),
-                        foreground: fields[2].to_owned(),
+                        background: arg.color.background.to_string(),
+                        foreground: arg.color.foreground.to_string(),
                         ..Default::default()
                     };
-                    modules::handle(fields[0], &mut segment, &fields[3..]);
+                    modules::handle(
+                        arg.name.as_str(),
+                        &mut segment,
+                        arg.args
+                            .iter()
+                            .map(String::as_str)
+                            .collect::<Vec<_>>()
+                            .as_slice(),
+                    );
                     segment
                 })
                 .filter(|seg| !seg.value.is_empty()),
