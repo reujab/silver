@@ -22,6 +22,8 @@ pub struct Config {
     pub cmdtime_threshold: Duration,
     #[serde(default)]
     pub dir: Dir,
+    #[serde(default)]
+    pub git: Git,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -74,6 +76,12 @@ pub struct Dir {
     pub aliases: HashMap<String, String>,
     #[serde(default)]
     pub length: Option<usize>,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct Git {
+    #[serde(default)]
+    pub ignore_dirs: Vec<String>,
 }
 
 impl Default for Separators {

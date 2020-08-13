@@ -1,9 +1,25 @@
 use crate::icons;
 use crate::Segment;
+use crate::CONFIG;
+use std::path::Path;
 
 use url::Url;
 
 pub fn segment(segment: &mut Segment, args: &[&str]) {
+    for dir in CONFIG.git.ignore_dirs.iter() {
+        if std::env::current_dir().unwrap()
+            == Path::new(
+                &shellexpand::full_with_context_no_errors(dir, dirs::home_dir, |s| {
+                    std::env::var(s).map(Some).unwrap_or_default()
+                })
+                .into_owned(),
+            )
+            .canonicalize()
+            .unwrap()
+        {
+            return;
+        }
+    }
     if let Ok(mut repo) = git2::Repository::discover(".") {
         let mut domain = icons::get("git");
         if let Ok(origin) = repo.find_remote("origin") {
