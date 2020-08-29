@@ -1,48 +1,55 @@
-use crate::icons;
-use crate::Segment;
-use crate::CONFIG;
-use std::path::Path;
+use super::Segment;
+use std::path::{Path, PathBuf};
 
 use url::Url;
 
-pub fn segment(segment: &mut Segment, args: &[&str]) {
-    for dir in CONFIG.git.ignore_dirs.iter() {
-        if std::env::current_dir().unwrap()
-            == Path::new(
-                &shellexpand::full_with_context_no_errors(dir, dirs::home_dir, |s| {
-                    std::env::var(s).map(Some).unwrap_or_default()
-                })
-                .into_owned(),
-            )
-            .canonicalize()
-            .unwrap()
-        {
-            return;
+pub struct Git {
+    pub ignore_dirs: Vec<PathBuf>,
+}
+
+impl Segment for Git {
+    fn draw(&self, icons: &dyn crate::IconProvider) -> Option<String> {
+        for dir in self.ignore_dirs.iter() {
+            if std::env::current_dir().unwrap()
+                == Path::new(
+                    &shellexpand::full_with_context_no_errors(dir.to_str()?, dirs::home_dir, |s| {
+                        std::env::var(s).map(Some).unwrap_or_default()
+                    })
+                    .into_owned(),
+                )
+                .canonicalize()
+                .unwrap()
+            {
+                return None;
+            }
         }
-    }
-    if let Ok(mut repo) = git2::Repository::discover(".") {
-        let mut domain = icons::get("git");
+        let mut repo = git2::Repository::discover(".").ok()?;
+
+        let mut domain = icons.get("git");
         if let Ok(origin) = repo.find_remote("origin") {
             let origin = origin.url().unwrap_or_default();
             match Url::parse(origin) {
-                Ok(url) => match url.domain().unwrap_or_default() {
-                    "github.com" => domain = icons::get("github"),
-                    "gitlab.com" => domain = icons::get("gitlab"),
-                    "bitbucket.org" => domain = icons::get("bitbucket"),
-                    "dev.azure.com" => domain = icons::get("azure"),
-                    _ => {}
-                },
+                Ok(url) => {
+                    match url.domain().unwrap_or_default() {
+                        "github.com" => domain = icons.get("github"),
+                        "gitlab.com" => domain = icons.get("gitlab"),
+                        "bitbucket.org" => domain = icons.get("bitbucket"),
+                        "dev.azure.com" => domain = icons.get("azure"),
+                        _ => (),
+                    }
+                }
                 Err(_) => {
                     if origin.starts_with("git@github.com:") {
-                        domain = icons::get("github");
+                        domain = icons.get("github");
                     } else if origin.starts_with("git@gitlab.com:") {
-                        domain = icons::get("gitlab");
+                        domain = icons.get("gitlab");
                     } else if origin.starts_with("git@bitbucket.org:") {
-                        domain = icons::get("bitbucket");
+                        domain = icons.get("bitbucket");
                     }
                 }
             }
         }
+        let domain = domain.unwrap_or_default().to_string();
 
         let mut stashes = 0;
         repo.stash_foreach(|_, _, _| {
@@ -50,7 +57,7 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
             true
         })
         .unwrap();
-        let stashes = icons::repeat("stash", stashes);
+        let stashes = icons.repeat("stash", stashes).unwrap_or_default();
 
         let mut graph = String::new();
         let mut branch = String::new();
@@ -65,7 +72,8 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
                             Ok((ahead, behind)) => (ahead, behind),
                             Err(_) => (0, 0),
                         };
-                        graph = icons::repeat("ahead", ahead) + &icons::repeat("behind", behind);
+                        graph = icons.repeat("ahead", ahead).unwrap_or_default()
+                            + &icons.repeat("behind", behind).unwrap_or_default();
                     }
                 }
             }
@@ -77,16 +85,13 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
             repo.statuses(Some(git2::StatusOptions::new().include_untracked(true)))
         {
             for status in statuses.iter() {
-                // dirty
-                segment.background = if args.is_empty() { "yellow" } else { args[0] }.to_owned();
-
                 let status = status.status();
                 if modified.is_empty() && status.is_wt_new()
                     || status.is_wt_modified()
                     || status.is_wt_renamed()
                     || status.is_wt_typechange()
                 {
-                    modified = icons::get("modified");
+                    modified = icons.get("modified").unwrap_or_default().to_string();
                 }
                 if staged.is_empty() && status.is_index_new()
                     || status.is_index_modified()
@@ -94,7 +99,7 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
                     || status.is_index_renamed()
                     || status.is_index_typechange()
                 {
-                    staged = icons::get("staged");
+                    staged = icons.get("staged").unwrap_or_default().to_string();
                 }
 
                 if !modified.is_empty() && !staged.is_empty() {
@@ -113,6 +118,6 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
         if !modified.is_empty() || !staged.is_empty() {
             parts.push(modified + &staged);
         }
-        segment.value = parts.join(" ");
+        Some(parts.join(" "))
     }
 }
