@@ -29,7 +29,7 @@ On macOS, you will have to do a bit more:
 * install [Homebrew](https://brew.sh/)
 * run `brew install coreutils`
 * run `brew install openssl`
-* add `alias date="gdate"` to your `.zshrc`
+* add `alias date="gdate"` to your shell config
 
 ### Configuration
 Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, create `silver.toml` with the following content:
@@ -62,8 +62,8 @@ color.foreground = "black"
 
 Now that silver is configured, you need to evaluate its bootstrap code.
 
-#### Bash, Zsh
-`~/.bashrc`/`~/.zshrc`:
+#### Bash
+`~/.bashrc`:
 ```sh
 source <(silver init)
 ```
@@ -73,6 +73,9 @@ source <(silver init)
 ```sh
 eval $(silver init)
 ```
+
+#### Zsh
+See [zsh plugin](https://github.com/silver-prompt/zsh#installation)
 
 #### Fish
 See [fish plugin](https://github.com/silver-prompt/fish#installation)

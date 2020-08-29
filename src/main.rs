@@ -56,11 +56,10 @@ fn main() {
             "{}",
             match Path::new(&shell).to_str().unwrap() {
                 "bash" => include_str!("init.bash"),
-                "zsh" => include_str!("init.zsh"),
                 "powershell" | "pwsh" => include_str!("init.powershell"),
                 "ion" => include_str!("init.ion"),
                 _ => panic!(
-                    "unknown shell: \"{}\". Supported shells: bash, zsh, ion, powershell",
+                    "unknown shell: \"{}\". Supported shells: bash, ion, powershell",
                     shell
                 ),
             }
