@@ -10,7 +10,7 @@ Unlike most shell prompts, silver is not written in shell script, but entirely i
 
 When `silver init` is run, it outputs shell code that sets your left prompt to run `silver lprompt` and right prompt to `silver rprompt`, which output the actual prompt.
 ## Getting started
-Since silver is not written in shell script, it should theoretically be compatible with any shell, but the three supported shells are Bash, Zsh, and fish.
+Since silver is not written in shell script, it should theoretically be compatible with any shell, but the supported shells are Powershell, Bash, Zsh, fish, Ion and Elvish.
 
 ### Icons
 To be able to use the custom icons (which are enabled by default), you must patch your font or install a pre-patched font from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
@@ -61,21 +61,24 @@ color.foreground = "black"
 ```
 
 Now that silver is configured, you need to evaluate its bootstrap code.
-
+#### Bash, Zsh
 `~/.bashrc`/`~/.zshrc`:
 ```sh
 source <(silver init)
 ```
-
+#### Fish
 `~/.config/fish/config.fish`:
 ```fish
 silver init | source
 ```
-
+#### Ion
 `~/.config/ion/initrc`:
 ```sh
 eval $(silver init)
 ```
+
+#### Elvish
+See [elvish plugin](https://github.com/silver-prompt/elvish#installation)
 
 ## Documentation
 Documentation is available on [the wiki](https://github.com/reujab/silver/wiki).
