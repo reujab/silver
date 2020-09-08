@@ -6,3 +6,4 @@ function prompt {
     Start-Process -Wait -NoNewWindow silver lprint
     "$([char]0x1b)[0m"
 }
+$Env:VIRTUAL_ENV_DISABLE_PROMPT = 1

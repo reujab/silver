@@ -1,3 +1,4 @@
 fn PROMPT
   env code=$? jobs=$(jobs -p | wc -l) silver lprint
 end
+export VIRTUAL_ENV_DISABLE_PROMPT = 1 # Doesn't make any sense yet
