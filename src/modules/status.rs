@@ -1,8 +1,7 @@
 #[cfg(unix)]
 use std::ffi::CString;
 
-use crate::icons;
-use crate::Segment;
+use crate::{icons, Segment};
 use std::env;
 
 #[cfg(target_os = "windows")]
@@ -55,8 +54,8 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         segment.value += &icons::get("root");
     }
 
-    // considering both macOS and BSD are POSIX, i'm assuming this will work on macOS and BSD, but i haven't checked
-    // https://linux.die.net/man/2/access
+    // considering both macOS and BSD are POSIX, i'm assuming this will work on
+    // macOS and BSD, but i haven't checked https://linux.die.net/man/2/access
     #[cfg(unix)]
     unsafe {
         let wd = CString::new(".").unwrap();

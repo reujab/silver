@@ -1,8 +1,6 @@
-use crate::Segment;
-use crate::CONFIG;
+use crate::{Segment, CONFIG};
 
-use std::env;
-use std::time::Duration;
+use std::{env, time::Duration};
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     if let Ok(cmdtime) = env::var("cmdtime") {

@@ -10,7 +10,7 @@ pub struct Silver {
     #[structopt(short, long)]
     pub config: Option<String>,
     #[structopt(subcommand)]
-    pub cmd: Command,
+    pub cmd:    Command,
 }
 
 #[derive(StructOpt, Debug)]

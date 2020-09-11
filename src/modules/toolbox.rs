@@ -1,5 +1,4 @@
-use crate::icons;
-use crate::Segment;
+use crate::{icons, Segment};
 use std::env;
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {

@@ -25,7 +25,7 @@ static CONFIG: Lazy<config::Config> = Lazy::new(|| {
 pub struct Segment {
     background: String,
     foreground: String,
-    value: String,
+    value:      String,
 }
 
 impl Default for Segment {
@@ -33,7 +33,7 @@ impl Default for Segment {
         Self {
             background: "none".to_owned(),
             foreground: "none".to_owned(),
-            value: String::new(),
+            value:      String::new(),
         }
     }
 }
@@ -42,7 +42,7 @@ fn main() {
     let sys = System::new_all();
     let process = sys.get_process(get_current_pid().unwrap()).unwrap();
     let parent = sys.get_process(process.parent().unwrap()).unwrap();
-    let shell = parent.name();
+    let shell = parent.name().trim();
 
     let opt = cli::Silver::from_args();
 
@@ -52,30 +52,33 @@ fn main() {
     }
 
     match opt.cmd {
-        Command::Init => print!(
-            "{}",
-            match Path::new(&shell).to_str().unwrap() {
-                "bash" => include_str!("init.bash"),
-                "powershell" | "pwsh" => include_str!("init.ps1"),
-                "ion" => include_str!("init.ion"),
-                _ => panic!(
-                    "unknown shell: \"{}\". Supported shells: bash, ion, powershell",
-                    shell
-                ),
-            }
-            .replace(
-                "silver",
-                format!(
-                    "silver{}",
-                    if let Some(path) = CONFIG_PATH.get() {
-                        format!(" --config {}", path.display())
-                    } else {
-                        String::new()
-                    }
+        Command::Init => {
+            print!(
+                "{}",
+                match shell {
+                    "bash" => include_str!("init.bash"),
+                    "powershell" | "pwsh" => include_str!("init.ps1"),
+                    "ion" => include_str!("init.ion"),
+                    _ =>
+                        panic!(
+                            "unknown shell: \"{}\". Supported shells: bash, ion, powershell",
+                            shell
+                        ),
+                }
+                .replace(
+                    "silver",
+                    format!(
+                        "silver{}",
+                        if let Some(path) = CONFIG_PATH.get() {
+                            format!(" --config {}", path.display())
+                        } else {
+                            String::new()
+                        }
+                    )
+                    .as_str()
                 )
-                .as_str()
             )
-        ),
+        }
         Command::Lprint => {
             print::prompt(&shell, &CONFIG.left, |_, (_, c, n)| {
                 vec![
@@ -102,27 +105,29 @@ fn main() {
             print!(" ")
         }
 
-        Command::Rprint => print::prompt(&shell, &CONFIG.right, |_, (p, c, _)| {
-            vec![
-                if p.background == c.background {
+        Command::Rprint => {
+            print::prompt(&shell, &CONFIG.right, |_, (p, c, _)| {
+                vec![
+                    if p.background == c.background {
+                        (
+                            c.background.to_owned(),
+                            c.foreground.to_owned(),
+                            CONFIG.separator.right.thin.to_owned(),
+                        )
+                    } else {
+                        (
+                            p.background.to_owned(),
+                            c.background.to_owned(),
+                            CONFIG.separator.right.thick.to_owned(),
+                        )
+                    },
                     (
                         c.background.to_owned(),
                         c.foreground.to_owned(),
-                        CONFIG.separator.right.thin.to_owned(),
-                    )
-                } else {
-                    (
-                        p.background.to_owned(),
-                        c.background.to_owned(),
-                        CONFIG.separator.right.thick.to_owned(),
-                    )
-                },
-                (
-                    c.background.to_owned(),
-                    c.foreground.to_owned(),
-                    format!(" {} ", c.value),
-                ),
-            ]
-        }),
+                        format!(" {} ", c.value),
+                    ),
+                ]
+            })
+        }
     }
 }

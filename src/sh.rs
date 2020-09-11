@@ -36,27 +36,31 @@ fn escape(
     match code(&color, &prefix, &light_prefix) {
         // 16 colors
         Some(code) => format!("{}\x1b[{}m{}", before_color, code, after_color),
-        None => match color.parse::<u8>() {
-            // 256 colors
-            Ok(_) => format!(
-                "{}\x1b[{}8;5;{}m{}",
-                before_color, prefix, color, after_color,
-            ),
-            Err(_) => {
-                // 24-bit color
-                if HEX.is_match(&color) {
+        None => {
+            match color.parse::<u8>() {
+                // 256 colors
+                Ok(_) => {
                     format!(
-                        "{}\x1b[{}8;2;{}m{}",
-                        before_color,
-                        prefix,
-                        escape_hex(color),
-                        after_color
+                        "{}\x1b[{}8;5;{}m{}",
+                        before_color, prefix, color, after_color,
                     )
-                } else {
-                    panic!("invalid background color: {}", color)
+                }
+                Err(_) => {
+                    // 24-bit color
+                    if HEX.is_match(&color) {
+                        format!(
+                            "{}\x1b[{}8;2;{}m{}",
+                            before_color,
+                            prefix,
+                            escape_hex(color),
+                            after_color
+                        )
+                    } else {
+                        panic!("invalid background color: {}", color)
+                    }
                 }
             }
-        },
+        }
     }
 }
 

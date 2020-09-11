@@ -1,6 +1,5 @@
 use crate::Segment;
-use std::env;
-use std::path::Path;
+use std::{env, path::Path};
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     segment.value = Path::new(&env::var("VIRTUAL_ENV").unwrap_or_default())

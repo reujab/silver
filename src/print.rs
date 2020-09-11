@@ -1,7 +1,4 @@
-use crate::config;
-use crate::modules;
-use crate::sh;
-use crate::Segment;
+use crate::{config, modules, sh, Segment};
 use std::iter::once;
 
 pub fn prompt<T, U>(shell: &str, args: &Vec<config::Segment>, f: T)

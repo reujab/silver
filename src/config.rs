@@ -1,7 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::fmt;
-use std::time::Duration;
+use std::{collections::HashMap, fmt, time::Duration};
 
 type Prompt = Vec<Segment>;
 
@@ -29,23 +27,23 @@ pub struct Config {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Separators {
     pub right: Separator,
-    pub left: Separator,
+    pub left:  Separator,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Separator {
     pub thick: String,
-    pub thin: String,
+    pub thin:  String,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
 pub struct Segment {
     #[serde(default)]
-    pub name: String,
+    pub name:  String,
     #[serde(default)]
     pub color: Colors,
     #[serde(default)]
-    pub args: Vec<String>,
+    pub args:  Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Default)]
@@ -75,7 +73,7 @@ pub struct Dir {
     #[serde(default)]
     pub aliases: HashMap<String, String>,
     #[serde(default)]
-    pub length: Option<usize>,
+    pub length:  Option<usize>,
 }
 
 #[derive(Debug, Default, Serialize, Deserialize)]
@@ -87,13 +85,13 @@ pub struct Git {
 impl Default for Separators {
     fn default() -> Self {
         Self {
-            left: Separator {
+            left:  Separator {
                 thick: "\u{e0b0}".into(),
-                thin: "\u{e0b1}".into(),
+                thin:  "\u{e0b1}".into(),
             },
             right: Separator {
                 thick: "\u{e0b2}".into(),
-                thin: "\u{e0b3}".into(),
+                thin:  "\u{e0b3}".into(),
             },
         }
     }

@@ -1,9 +1,6 @@
-use crate::icons;
-use crate::Segment;
-use crate::CONFIG;
+use crate::{icons, Segment, CONFIG};
 
-use std::env;
-use std::path::Path;
+use std::{env, path::Path};
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let mut wd = match env::current_dir() {

@@ -2,8 +2,7 @@ use crate::Segment;
 
 #[cfg(target_os = "windows")]
 mod users {
-    use std::env;
-    use std::ffi::OsString;
+    use std::{env, ffi::OsString};
 
     pub fn get_current_username() -> Option<OsString> {
         env::var("USERNAME").ok().map(|s| s.into())
