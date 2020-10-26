@@ -2,6 +2,8 @@
 
 [![Join the chat at https://gitter.im/reujab-silver/community](https://badges.gitter.im/reujab-silver/community.svg)](https://gitter.im/reujab-silver/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Packaging status](https://repology.org/badge/vertical-allrepos/silver.svg)](https://repology.org/project/silver/versions)
+
 A cross-shell customizable powerline-like prompt heavily inspired by [Agnoster](https://github.com/agnoster/agnoster-zsh-theme). The faster rust port of [bronze](https://github.com/reujab/bronze).<br/>
 ![](./sleep.png)
 
