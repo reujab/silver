@@ -26,7 +26,7 @@ To be able to use the custom icons (which are enabled by default), you must patc
 #### From source
 
 - install and setup [Rust](https://www.rust-lang.org/)
-- run `cargo install silver`
+- run `cargo install --git https://github.com/reujab/silver`
 
 #### From pre-compiled binary
 
