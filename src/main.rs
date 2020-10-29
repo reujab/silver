@@ -57,7 +57,7 @@ fn main() {
                 "{}",
                 match shell {
                     "bash" => include_str!("init.bash"),
-                    "powershell" | "pwsh" => include_str!("init.ps1"),
+                    "powershell" | "pwsh" | "powershell.exe" | "pwsh.exe" => include_str!("init.ps1"),
                     "ion" => include_str!("init.ion"),
                     _ =>
                         panic!(
