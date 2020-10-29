@@ -1,0 +1,12 @@
+- repo: https://github.com/doublify/pre-commit-rust
+  rev: master
+  hooks:
+    - id: fmt
+      args: ["-v"]
+      pass_filenames: false
+    - id: cargo-check
+      args: ["-v"]
+      pass_filenames: false
+    - id: clippy
+      args: ["-v"]
+      pass_filenames: false
