@@ -65,7 +65,7 @@ fn main() {
             .replace(
                 "silver",
                 format!(
-                    "silver.exe {}",
+                    "silver {}",
                     if let Some(path) = CONFIG_PATH.get() {
                         let path_canon = path.canonicalize().expect("invalid path");
                         format!(
