@@ -1,14 +1,14 @@
 use crate::{config, modules, sh, Segment};
 use std::iter::once;
 
-pub fn prompt<T, U>(shell: &str, args: &Vec<config::Segment>, f: T)
+pub fn prompt<T, U>(shell: &str, args: &[config::Segment], f: T)
 where
     T: Fn(usize, (&Segment, &Segment, &Segment)) -> U,
     U: IntoIterator<Item = (String, String, String)>,
 {
     let v: Vec<_> = once(Segment::default())
         .chain(
-            args.into_iter()
+            args.iter()
                 .map(|arg| {
                     let mut segment = Segment {
                         background: arg.color.background.to_string(),

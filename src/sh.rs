@@ -7,8 +7,8 @@ lazy_static! {
 }
 
 fn code(color: &str, prefix: &str, light_prefix: &str) -> Option<String> {
-    let (color, prefix) = if color.starts_with("light") {
-        (&color[5..], light_prefix)
+    let (color, prefix) = if let Some(stripped) = color.strip_prefix("light") {
+        (stripped, light_prefix)
     } else {
         (color, prefix)
     };
