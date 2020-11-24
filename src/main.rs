@@ -44,7 +44,7 @@ fn main() {
     let parent = sys.get_process(process.parent().unwrap()).unwrap();
     let shell = parent.name().trim();
 
-    let opt = cli::Silver::from_args();
+    let opt = cli::Silver::parse();
 
     if let Some(path) = opt.config {
         let path = Path::new(path.as_str()).canonicalize().unwrap();

@@ -1,19 +1,19 @@
-pub use structopt::StructOpt;
+pub use clap::Clap;
 
-#[derive(StructOpt, Debug)]
-#[structopt(
+#[derive(Clap, Debug)]
+#[clap(
     about = "a cross-shell customizable powerline-like prompt with icons",
     name = "silver",
     after_help = "https://github.com/reujab/silver/wiki"
 )]
 pub struct Silver {
-    #[structopt(short, long)]
+    #[clap(short, long)]
     pub config: Option<String>,
-    #[structopt(subcommand)]
-    pub cmd:    Command,
+    #[clap(subcommand)]
+    pub cmd: Command,
 }
 
-#[derive(StructOpt, Debug)]
+#[derive(Clap, Debug)]
 pub enum Command {
     Init,
     Lprint,
