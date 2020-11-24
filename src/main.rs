@@ -103,7 +103,7 @@ fn main() {
                     },
                 ]
             });
-            print!(" ")
+            print!(" ");
         }
 
         Command::Rprint => {
