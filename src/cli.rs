@@ -9,6 +9,8 @@ pub use structopt::StructOpt;
 pub struct Silver {
     #[structopt(short, long)]
     pub config: Option<String>,
+    #[structopt(short, long)]
+    pub shell:  Option<String>,
     #[structopt(subcommand)]
     pub cmd:    Command,
 }
