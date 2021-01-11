@@ -1,3 +1,4 @@
+repos:
 - repo: https://github.com/doublify/pre-commit-rust
   rev: master
   hooks:
