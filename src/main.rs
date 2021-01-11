@@ -42,7 +42,13 @@ fn main() {
     let sys = System::new_all();
     let process = sys.get_process(get_current_pid().unwrap()).unwrap();
     let parent = sys.get_process(process.parent().unwrap()).unwrap();
-    let shell = parent.name().trim();
+    let shell = std::env::var("SILVER_SHELL")
+        .map(|s| s)
+        .unwrap_or_else(|_| {
+            let shell = parent.name().trim();
+            let shell = shell.strip_suffix(".exe").unwrap_or(shell);
+            shell.strip_prefix("-").unwrap_or(shell).to_owned()
+        });
 
     let opt = cli::Silver::parse();
 
@@ -55,10 +61,9 @@ fn main() {
         Command::Init => {
             print!(
                 "{}",
-                match shell {
+                match shell.as_str() {
                     "bash" => include_str!("init.bash"),
-                    "powershell" | "pwsh" | "powershell.exe" | "pwsh.exe" =>
-                        include_str!("init.ps1"),
+                    "powershell" | "pwsh" => include_str!("init.ps1"),
                     "ion" => include_str!("init.ion"),
                     _ =>
                         panic!(
