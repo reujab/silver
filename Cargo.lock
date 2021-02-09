@@ -134,7 +134,8 @@ dependencies = [
 [[package]]
 name = "confy"
 version = "0.4.0"
-source = "git+https://github.com/rust-cli/confy#baf2b401c9b4e783599ac8c74a6a9829a27f0deb"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2913470204e9e8498a0f31f17f90a0de801ae92c8c5ac18c49af4819e6786697"
 dependencies = [
  "directories",
  "serde",
