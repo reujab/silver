@@ -22,6 +22,9 @@ pub struct Config {
     pub dir: Dir,
     #[serde(default)]
     pub git: Git,
+	#[serde(default)]
+	pub usercmd: Usercmd,
+
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -80,6 +83,14 @@ pub struct Dir {
 pub struct Git {
     #[serde(default)]
     pub ignore_dirs: Vec<String>,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct Usercmd{
+	#[serde(default)]
+	pub command:	String,
+	#[serde(default)]
+	pub args: Vec<String>,
 }
 
 impl Default for Separators {
