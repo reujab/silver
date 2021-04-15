@@ -22,10 +22,15 @@ color.foreground = "black"
 name = "shell"
 color.background = "green"
 color.foreground = "black"
+
 [[left]]
 name = "usercmd"
 color.background = "green"
 color.foreground = "black"
 [usercmd]
-command = "ls"
-args = ["-l"]
+command = "hostname"
+
+[[left]]
+name = "os"
+color.background = "grey"
+color.foreground = "black"
