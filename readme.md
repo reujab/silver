@@ -44,7 +44,7 @@ On macOS, you will have to do a bit more:
 
 ### Configuration
 
-Now that you have silver installed, you need to configure it. To have your prompt look like the one in the screenshot above, create `silver.toml` with the following content:
+Now that you have silver installed, you need to configure it. To have your prompt look like the screenshot at the top of the readme, create `silver.toml` with:
 
 ```toml
 [[left]]
