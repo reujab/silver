@@ -20,26 +20,26 @@ fn is_root() -> bool {
 
     let mut token = INVALID_HANDLE_VALUE;
     let mut elevated = false;
-    unsafe {
-        if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) == TRUE {
-            let mut elevation: TOKEN_ELEVATION = mem::zeroed();
+    
+        if unsafe { OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) == TRUE } {
+            let mut elevation: TOKEN_ELEVATION = unsafe { mem::zeroed() };
             let mut size = mem::size_of::<TOKEN_ELEVATION>() as DWORD;
-            if GetTokenInformation(
+            if unsafe { GetTokenInformation(
                 token,
                 TokenElevation,
                 &mut elevation as *mut TOKEN_ELEVATION as *mut c_void,
                 size,
                 &mut size,
-            ) == TRUE
+            ) == TRUE }
             {
                 elevated = elevation.TokenIsElevated != 0;
             }
         }
 
         if token != INVALID_HANDLE_VALUE {
-            CloseHandle(token);
+            unsafe { CloseHandle(token) };
         }
-    }
+    
 
     elevated
 }
