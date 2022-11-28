@@ -19,7 +19,7 @@ Since silver is not written in shell script, it should theoretically be compatib
 
 ### Icons
 
-To be able to use the custom icons (which are enabled by default), you must patch your font or install a pre-patched font from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
+To be able to use the custom icons (which are disabled by default), you must patch your font or install a pre-patched font from [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
 
 ### Installation
 

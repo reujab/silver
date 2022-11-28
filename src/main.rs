@@ -13,12 +13,11 @@ use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
 static CONFIG_PATH: OnceCell<PathBuf> = OnceCell::new();
 
 static CONFIG: Lazy<config::Config> = Lazy::new(|| {
-    if let Some(path) = CONFIG_PATH.get() {
-        confy::load_path(path)
-    } else {
-        confy::load("silver")
+    match CONFIG_PATH.get() {
+        Some(path) => confy::load_path(path),
+        None => confy::load("silver", None),
     }
-    .expect("Failed to read config")
+    .expect("Problem loading or serializing default config")
 });
 
 #[derive(Clone, Debug)]
