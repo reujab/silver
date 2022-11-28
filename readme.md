@@ -33,7 +33,7 @@ To be able to use the custom icons (which are disabled by default), you must pat
 - download a binary on the [releases page](https://github.com/reujab/silver/releases)
 - add binary to `PATH` environment variable
 
-#### macOS
+#### macOS prerequisite
 
 On macOS, you will have to do a bit more:
 
@@ -44,7 +44,11 @@ On macOS, you will have to do a bit more:
 
 ### Configuration
 
-Now that you have silver installed, you need to configure it. To have your prompt look like the screenshot at the top of the readme, create `silver.toml` with:
+Now that you have silver installed, you need to create `silver.toml` and put it in the following path: 
+- **Linux:** `~/.config/silver/silver.toml` or `$XDG_CONFIG_HOME/silver/silver.toml`
+- **macOS:** `~/Library/Preferences/rs.silver/silver.toml`
+
+To have your prompt look like the screenshot at the top of the readme, configure `silver.toml` with:
 
 ```toml
 [[left]]
