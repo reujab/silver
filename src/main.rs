@@ -39,8 +39,8 @@ impl Default for Segment {
 
 fn main() {
     let sys = System::new_all();
-    let process = sys.get_process(get_current_pid().unwrap()).unwrap();
-    let parent = sys.get_process(process.parent().unwrap()).unwrap();
+    let process = sys.process(get_current_pid().unwrap()).unwrap();
+    let parent = sys.process(process.parent().unwrap()).unwrap();
     let shell = std::env::var("SILVER_SHELL")
         .map(|s| s)
         .unwrap_or_else(|_| {

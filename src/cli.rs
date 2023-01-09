@@ -1,19 +1,20 @@
-pub use clap::Clap;
+pub use clap::{Args, Parser, Subcommand, ValueEnum};
 
-#[derive(Clap, Debug)]
-#[clap(
+#[derive(Parser, Debug)]
+#[command(
     about = "a cross-shell customizable powerline-like prompt with icons",
     name = "silver",
     after_help = "https://github.com/reujab/silver/wiki"
 )]
 pub struct Silver {
-    #[clap(short, long)]
+    #[arg(short, long)]
     pub config: Option<String>,
-    #[clap(subcommand)]
+
+    #[command(subcommand)]
     pub cmd:    Command,
 }
 
-#[derive(Clap, Debug)]
+#[derive(Subcommand, Debug)]
 pub enum Command {
     Init,
     Lprint,
