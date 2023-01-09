@@ -3,7 +3,7 @@ use regex::Regex;
 
 lazy_static! {
     // global regex constant
-    static ref HEX: Regex = Regex::new(r"^[a-f\d]{6}$").unwrap();
+    static ref HEX: Regex = Regex::new(r"^[a-fA-F\d]{6}$").unwrap();
 }
 
 fn code(color: &str, prefix: &str, light_prefix: &str) -> Option<String> {
