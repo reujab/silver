@@ -32,7 +32,7 @@ shellexpand = "2.0"
 sysinfo = "0.27.3"
 
 [target.'cfg(not(windows))'.dependencies]
-users = "0.11.0"
+users = { version = "0.11.0", default-features=false }
 
 [target.'cfg(windows)'.dependencies.winapi]
 version = "0.3"
