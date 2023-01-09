@@ -29,7 +29,7 @@ regex = "1"
 rust-ini = "0.18.0"
 url = "2"
 shellexpand = "2.0"
-sysinfo = "0.15"
+sysinfo = "0.27.3"
 
 [target.'cfg(not(windows))'.dependencies]
 users = "0.10"
