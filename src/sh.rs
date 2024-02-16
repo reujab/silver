@@ -7,8 +7,8 @@ lazy_static! {
 }
 
 fn code(color: &str, prefix: &str, light_prefix: &str) -> Option<String> {
-    let (color, prefix) = if color.starts_with("light") {
-        (&color[5..], light_prefix)
+    let (color, prefix) = if let Some(suffix) = color.strip_prefix("light") {
+        (suffix, light_prefix)
     } else {
         (color, prefix)
     };
@@ -33,7 +33,7 @@ fn escape(
     before_color: &str,
     after_color: &str,
 ) -> String {
-    match code(&color, &prefix, &light_prefix) {
+    match code(color, prefix, light_prefix) {
         // 16 colors
         Some(code) => format!("{}\x1b[{}m{}", before_color, code, after_color),
         None => {
@@ -47,7 +47,7 @@ fn escape(
                 }
                 Err(_) => {
                     // 24-bit color
-                    if HEX.is_match(&color) {
+                    if HEX.is_match(color) {
                         format!(
                             "{}\x1b[{}8;2;{}m{}",
                             before_color,

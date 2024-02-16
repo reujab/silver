@@ -41,13 +41,11 @@ fn main() {
     let sys = System::new_all();
     let process = sys.process(get_current_pid().unwrap()).unwrap();
     let parent = sys.process(process.parent().unwrap()).unwrap();
-    let shell = std::env::var("SILVER_SHELL")
-        .map(|s| s)
-        .unwrap_or_else(|_| {
-            let shell = parent.name().trim();
-            let shell = shell.strip_suffix(".exe").unwrap_or(shell);
-            shell.strip_prefix("-").unwrap_or(shell).to_owned()
-        });
+    let shell = std::env::var("SILVER_SHELL").unwrap_or_else(|_| {
+        let shell = parent.name().trim();
+        let shell = shell.strip_suffix(".exe").unwrap_or(shell);
+        shell.strip_prefix('-').unwrap_or(shell).to_owned()
+    });
 
     let opt = cli::Silver::parse();
 

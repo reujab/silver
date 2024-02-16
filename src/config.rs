@@ -65,6 +65,7 @@ pub enum Color {
 pub enum IconSet {
     Nerd,
     Unicode,
+    #[allow(clippy::upper_case_acronyms)]
     ASCII,
 }
 

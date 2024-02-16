@@ -44,7 +44,7 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
     });
     for (dir, alias) in aliases {
         wd = match wd.strip_prefix(dir) {
-            Ok(stripped) => alias.join(stripped.to_path_buf()),
+            Ok(stripped) => alias.join(stripped),
             Err(_) => wd.clone(),
         }
     }
