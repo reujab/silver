@@ -1,5 +1,5 @@
 use crate::Segment;
-use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
+use sysinfo::{get_current_pid, System};
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let sys = System::new_all();

@@ -83,16 +83,14 @@ pub struct Git {
 }
 
 fn default_left_prompt() -> Prompt {
-    vec![
-        Segment {
-            name: "dir".into(),
-            color: Colors {
-                background: Color::Name("7".into()),
-                foreground: Color::Name("0".into()),
-            },
-            args: vec![],
-        }
-    ]
+    vec![Segment {
+        name:  "dir".into(),
+        color: Colors {
+            background: Color::Name("7".into()),
+            foreground: Color::Name("0".into()),
+        },
+        args:  vec![],
+    }]
 }
 
 // Implement defaults that will render a

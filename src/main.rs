@@ -8,7 +8,7 @@ mod sh;
 use cli::*;
 use once_cell::sync::{Lazy, OnceCell};
 use std::path::{Path, PathBuf};
-use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
+use sysinfo::{get_current_pid, System};
 
 static CONFIG_PATH: OnceCell<PathBuf> = OnceCell::new();
 

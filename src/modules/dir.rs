@@ -15,9 +15,11 @@ pub fn segment(segment: &mut Segment, _: &[&str]) {
         .iter()
         .flat_map(|(i, j)| {
             if let Ok(p) = Path::new(
-                &shellexpand::full_with_context_no_errors(j, dirs::home_dir, |s| {
-                    env::var(s).map(Some).unwrap_or_default()
-                })
+                &shellexpand::full_with_context_no_errors(
+                    j,
+                    || dirs::home_dir().map(|p| p.to_string_lossy().into_owned()),
+                    |s| env::var(s).map(Some).unwrap_or_default(),
+                )
                 .into_owned(),
             )
             .canonicalize()
