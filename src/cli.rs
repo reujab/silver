@@ -1,6 +1,6 @@
-pub use clap::Clap;
+pub use clap::Parser;
 
-#[derive(Clap, Debug)]
+#[derive(Debug, Parser)]
 #[clap(
     about = "a cross-shell customizable powerline-like prompt with icons",
     name = "silver",
@@ -10,10 +10,10 @@ pub struct Silver {
     #[clap(short, long)]
     pub config: Option<String>,
     #[clap(subcommand)]
-    pub cmd:    Command,
+    pub cmd: Command,
 }
 
-#[derive(Clap, Debug)]
+#[derive(Debug, Parser)]
 pub enum Command {
     Init,
     Lprint,
