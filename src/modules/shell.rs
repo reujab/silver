@@ -1,11 +1,11 @@
 use crate::Segment;
-use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
+use sysinfo::{get_current_pid, System};
 
 pub fn segment(segment: &mut Segment, _: &[&str]) {
     let sys = System::new_all();
     segment.value = sys
-        .get_process(
-            sys.get_process(get_current_pid().unwrap())
+        .process(
+            sys.process(get_current_pid().unwrap())
                 .unwrap()
                 .parent()
                 .unwrap(),

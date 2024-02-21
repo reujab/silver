@@ -7,9 +7,11 @@ pub fn segment(segment: &mut Segment, args: &[&str]) {
     for dir in CONFIG.git.ignore_dirs.iter() {
         if std::env::current_dir().unwrap()
             == Path::new(
-                &shellexpand::full_with_context_no_errors(dir, dirs::home_dir, |s| {
-                    std::env::var(s).map(Some).unwrap_or_default()
-                })
+                &shellexpand::full_with_context_no_errors(
+                    dir,
+                    || dirs::home_dir().map(|p| p.to_string_lossy().into_owned()),
+                    |s| std::env::var(s).map(Some).unwrap_or_default(),
+                )
                 .into_owned(),
             )
             .canonicalize()

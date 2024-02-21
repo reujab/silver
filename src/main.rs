@@ -8,7 +8,7 @@ mod sh;
 use cli::*;
 use once_cell::sync::{Lazy, OnceCell};
 use std::path::{Path, PathBuf};
-use sysinfo::{get_current_pid, ProcessExt, System, SystemExt};
+use sysinfo::{get_current_pid, System};
 
 static CONFIG_PATH: OnceCell<PathBuf> = OnceCell::new();
 
@@ -39,15 +39,13 @@ impl Default for Segment {
 
 fn main() {
     let sys = System::new_all();
-    let process = sys.get_process(get_current_pid().unwrap()).unwrap();
-    let parent = sys.get_process(process.parent().unwrap()).unwrap();
-    let shell = std::env::var("SILVER_SHELL")
-        .map(|s| s)
-        .unwrap_or_else(|_| {
-            let shell = parent.name().trim();
-            let shell = shell.strip_suffix(".exe").unwrap_or(shell);
-            shell.strip_prefix("-").unwrap_or(shell).to_owned()
-        });
+    let process = sys.process(get_current_pid().unwrap()).unwrap();
+    let parent = sys.process(process.parent().unwrap()).unwrap();
+    let shell = std::env::var("SILVER_SHELL").unwrap_or_else(|_| {
+        let shell = parent.name().trim();
+        let shell = shell.strip_suffix(".exe").unwrap_or(shell);
+        shell.strip_prefix('-').unwrap_or(shell).to_owned()
+    });
 
     let opt = cli::Silver::parse();
 
