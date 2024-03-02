@@ -1,6 +1,7 @@
 # silver
 
 [![Join the chat at https://gitter.im/reujab-silver/community](https://badges.gitter.im/reujab-silver/community.svg)](https://gitter.im/reujab-silver/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Freujab%2Fsilver.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Freujab%2Fsilver?ref=badge_shield)
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/silver.svg)](https://repology.org/project/silver/versions)
 
@@ -159,3 +160,7 @@ Documentation is available on [the wiki](https://github.com/reujab/silver/wiki).
     - prints prompt segments
   - [`sh.rs`](src/sh.rs)
     - shell-specific code
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Freujab%2Fsilver.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Freujab%2Fsilver?ref=badge_large)
